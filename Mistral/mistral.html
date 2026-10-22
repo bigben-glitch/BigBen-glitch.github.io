@@ -1,0 +1,1347 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Solverket designar och installerar solenergianläggningar för svenska hem och företag. Från fri analys till färdig anläggning – vi sköter allt." />
+  <meta name="theme-color" content="#0b1220" />
+  <title>Solverket — Solenergi för framtidens Sverige</title>
+
+  <style>
+    /* ============================================================
+       SOLVERKET — Designsystem
+       Mobile-first. Skalas smidigt från 320 px till 4K (3840 px+)
+       ============================================================ */
+
+    :root {
+      /* Färger (mörkt tema som standard) */
+      --bg: #0b1220;
+      --bg-soft: #101a2e;
+      --bg-card: #15223c;
+      --bg-card-hover: #1a2a4a;
+      --border: rgba(255, 255, 255, 0.09);
+      --text: #eaf0fa;
+      --text-dim: #9fb0ca;
+      --text-faint: #6a7d9b;
+      --accent: #ffb830;
+      --accent-strong: #ffcf5c;
+      --accent-contrast: #1a1205;
+      --green: #3ddc97;
+      --gradient-cta: linear-gradient(135deg, #ffb830 0%, #ff9d2e 55%, #ff7a1a 100%);
+      --gradient-hero: radial-gradient(ellipse 80% 60% at 70% 10%, rgba(255, 176, 48, 0.16), transparent 60%),
+                        radial-gradient(ellipse 60% 50% at 15% 85%, rgba(61, 220, 151, 0.08), transparent 60%);
+      --shadow-soft: 0 1rem 3rem rgba(2, 8, 20, 0.45);
+      --shadow-glow: 0 0 2.5rem rgba(255, 176, 48, 0.25);
+
+      /* Typografi & spacing – allt i rem så att 4K-skärmar skalas elegant */
+      --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+      --radius: 1.1rem;
+      --radius-lg: 1.75rem;
+      --container: 72rem;
+      --header-h: 4.5rem;
+    }
+
+    /* Ljust tema */
+    html[data-theme="light"] {
+      --bg: #f7f9fc;
+      --bg-soft: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fff8ec;
+      --border: rgba(15, 35, 70, 0.12);
+      --text: #122036;
+      --text-dim: #46587a;
+      --text-faint: #7688a6;
+      --gradient-hero: radial-gradient(ellipse 80% 60% at 70% 10%, rgba(255, 176, 48, 0.18), transparent 60%),
+                        radial-gradient(ellipse 60% 50% at 15% 85%, rgba(61, 220, 151, 0.10), transparent 60%);
+      --shadow-soft: 0 1rem 3rem rgba(15, 35, 70, 0.10);
+    }
+
+    /* Uppskalad rotstorlek för stora skärmar (QHD/4K) */
+    @media (min-width: 1800px) { html { font-size: 18px; } }
+    @media (min-width: 2400px) { html { font-size: 20px; } }
+    @media (min-width: 3200px) { html { font-size: 22px; } }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+      transition: background 0.35s ease, color 0.35s ease;
+    }
+
+    ::selection { background: var(--accent); color: var(--accent-contrast); }
+
+    /* Tillgänglighet: hoppa till innehåll */
+    .skip-link {
+      position: absolute; left: 1rem; top: -4rem; z-index: 200;
+      background: var(--accent); color: var(--accent-contrast);
+      padding: 0.6rem 1.2rem; border-radius: 0.6rem; font-weight: 700;
+      transition: top 0.25s ease;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    /* Layout-hjälpare */
+    .container {
+      width: min(var(--container), 100% - 2.5rem);
+      margin-inline: auto;
+    }
+
+    section { padding: clamp(3.5rem, 8vw, 7rem) 0; position: relative; }
+
+    .section-label {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: ""; width: 2rem; height: 2px; background: var(--accent); border-radius: 2px;
+    }
+
+    h1, h2, h3 { line-height: 1.15; letter-spacing: -0.02em; font-weight: 800; }
+    h2 { font-size: clamp(1.9rem, 3.5vw + 0.6rem, 3.4rem); margin-bottom: 1rem; }
+    h3 { font-size: clamp(1.1rem, 1.4vw + 0.5rem, 1.6rem); }
+
+    .lead { color: var(--text-dim); font-size: clamp(1rem, 1.2vw + 0.4rem, 1.3rem); max-width: 42rem; }
+
+    /* ============================ HEADER ============================ */
+    .site-header {
+      position: fixed; inset: 0 0 auto 0; z-index: 100;
+      height: var(--header-h);
+      display: flex; align-items: center;
+      background: transparent;
+      transition: background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+    .site-header.scrolled {
+      background: color-mix(in srgb, var(--bg) 82%, transparent);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom-color: var(--border);
+      box-shadow: var(--shadow-soft);
+    }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+
+    .brand { display: flex; align-items: center; gap: 0.65rem; text-decoration: none; color: var(--text); }
+    .brand-logo { width: 2.3rem; height: 2.3rem; flex-shrink: 0; }
+    .brand-name { font-weight: 800; font-size: 1.15rem; letter-spacing: -0.01em; }
+    .brand-name em { font-style: normal; color: var(--accent); }
+
+    .nav-desktop { display: none; }
+    .nav-list { display: flex; align-items: center; gap: 1.75rem; list-style: none; }
+    .nav-link {
+      text-decoration: none; color: var(--text-dim); font-weight: 600; font-size: 0.95rem;
+      position: relative; padding: 0.3rem 0;
+      transition: color 0.2s ease;
+    }
+    .nav-link::after {
+      content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 0;
+      background: var(--accent); border-radius: 2px; transition: width 0.25s ease;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--text); }
+    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+
+    .header-actions { display: flex; align-items: center; gap: 0.75rem; }
+
+    /* Knappar */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      font: inherit; font-weight: 700; text-decoration: none; cursor: pointer;
+      border-radius: 999px; padding: 0.8rem 1.6rem; font-size: 0.95rem;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.2s ease, border-color 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary {
+      background: var(--gradient-cta); color: var(--accent-contrast);
+      box-shadow: var(--shadow-glow);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0.75rem 2.5rem rgba(255, 157, 46, 0.4); }
+    .btn-ghost {
+      background: transparent; color: var(--text); border-color: var(--border);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .header-cta { display: none; }
+
+    .theme-toggle {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 2.6rem; height: 2.6rem; border-radius: 50%;
+      background: color-mix(in srgb, var(--text) 7%, transparent);
+      border: 1px solid var(--border); color: var(--text); cursor: pointer;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .theme-toggle:hover { border-color: var(--accent); transform: rotate(15deg); }
+    .theme-toggle svg { width: 1.2rem; height: 1.2rem; }
+    html[data-theme="light"] .icon-moon { display: none; }
+    html:not([data-theme="light"]) .icon-sun { display: none; }
+
+    /* Mobil-meny */
+    .menu-toggle {
+      display: inline-flex; flex-direction: column; justify-content: center; gap: 5px;
+      width: 2.6rem; height: 2.6rem; border-radius: 0.7rem;
+      background: color-mix(in srgb, var(--text) 7%, transparent);
+      border: 1px solid var(--border); cursor: pointer;
+    }
+    .menu-toggle span {
+      display: block; height: 2px; width: 1.2rem; margin-inline: auto;
+      background: var(--text); border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-mobile {
+      position: fixed; inset: var(--header-h) 0 auto 0; z-index: 99;
+      background: color-mix(in srgb, var(--bg) 96%, transparent);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 1.25rem 2rem;
+      transform: translateY(-110%); opacity: 0; visibility: hidden;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease, visibility 0.35s;
+    }
+    .nav-mobile.open { transform: translateY(0); opacity: 1; visibility: visible; }
+    .nav-mobile ul { list-style: none; display: grid; gap: 0.25rem; }
+    .nav-mobile a {
+      display: block; padding: 0.85rem 1rem; border-radius: 0.8rem;
+      color: var(--text); text-decoration: none; font-weight: 600; font-size: 1.05rem;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .nav-mobile a:hover { background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); }
+    .nav-mobile .btn { width: 100%; margin-top: 1rem; }
+
+    @media (min-width: 900px) {
+      .menu-toggle, .nav-mobile { display: none; }
+      .nav-desktop { display: block; }
+      .header-cta { display: inline-flex; }
+    }
+
+    /* ============================= HERO ============================= */
+    .hero {
+      min-height: 100svh;
+      display: flex; align-items: center;
+      padding-top: calc(var(--header-h) + 2rem);
+      background: var(--gradient-hero), var(--bg);
+      overflow: hidden;
+    }
+    .hero-grid { display: grid; gap: 3rem; align-items: center; }
+    @media (min-width: 1000px) {
+      .hero-grid { grid-template-columns: 1.15fr 0.85fr; gap: 2rem; }
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      padding: 0.45rem 1rem; border-radius: 999px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+      color: var(--accent-strong);
+      font-size: 0.85rem; font-weight: 700; margin-bottom: 1.5rem;
+    }
+    .hero-badge .pulse {
+      width: 0.5rem; height: 0.5rem; border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(61, 220, 151, 0.6); }
+      70% { box-shadow: 0 0 0 0.55rem rgba(61, 220, 151, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(61, 220, 151, 0); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 6.5vw + 0.5rem, 5.6rem);
+      margin-bottom: 1.4rem;
+    }
+    .hero h1 .gradient-text {
+      background: var(--gradient-cta);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: transparent;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 0.9rem; margin: 2.2rem 0 2.5rem; }
+    .btn-lg { padding: 1rem 2rem; font-size: 1.05rem; }
+
+    .hero-stats { display: flex; flex-wrap: wrap; gap: clamp(1.5rem, 4vw, 3.5rem); }
+    .hero-stat .num {
+      font-size: clamp(1.6rem, 2.5vw + 0.4rem, 2.6rem); font-weight: 800;
+      color: var(--accent); letter-spacing: -0.02em;
+    }
+    .hero-stat .lbl { color: var(--text-faint); font-size: 0.85rem; font-weight: 600; }
+
+    /* Animerad sol-visual (ren SVG + CSS) */
+    .hero-visual { position: relative; display: flex; justify-content: center; }
+    .sun-scene { width: min(100%, 26rem); height: auto; overflow: visible; }
+    .sun-scene .orbit { transform-origin: 200px 200px; animation: spin 40s linear infinite; }
+    .sun-scene .orbit-rev { transform-origin: 200px 200px; animation: spin 60s linear infinite reverse; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .sun-scene .sun-core {
+      animation: glow 5s ease-in-out infinite;
+      transform-origin: 200px 200px;
+    }
+    @keyframes glow {
+      0%, 100% { filter: drop-shadow(0 0 6px rgba(255, 184, 48, 0.35)); }
+      50% { filter: drop-shadow(0 0 22px rgba(255, 184, 48, 0.75)); }
+    }
+
+    .scroll-hint {
+      position: absolute; left: 50%; bottom: 1.75rem; transform: translateX(-50%);
+      color: var(--text-faint); font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase;
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      animation: bob 2.4s ease-in-out infinite;
+    }
+    @keyframes bob { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 8px); } }
+
+    /* ======================== FÖRTROENDE-BAR ======================== */
+    .trustbar { border-block: 1px solid var(--border); background: var(--bg-soft); }
+    .trustbar-inner {
+      display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+      gap: 1.5rem 3rem; padding: 1.5rem 0;
+      color: var(--text-faint); font-weight: 700; font-size: 0.95rem;
+    }
+    .trustbar-item { display: flex; align-items: center; gap: 0.6rem; }
+    .trustbar-item svg { width: 1.3rem; height: 1.3rem; color: var(--accent); }
+
+    /* ============================ TJÄNSTER ========================== */
+    .cards-grid { display: grid; gap: 1.25rem; margin-top: 2.5rem; }
+    @media (min-width: 640px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1100px) { .cards-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 1.9rem;
+      position: relative; overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card::before {
+      content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
+      background: var(--gradient-cta);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+      box-shadow: var(--shadow-soft);
+    }
+    .card:hover::before { transform: scaleX(1); }
+
+    .card-icon {
+      width: 3.2rem; height: 3.2rem; border-radius: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+      color: var(--accent); margin-bottom: 1.4rem;
+    }
+    .card-icon svg { width: 1.7rem; height: 1.7rem; }
+    .card h3 { margin-bottom: 0.6rem; }
+    .card p { color: var(--text-dim); font-size: 0.95rem; }
+    .card .card-tag {
+      display: inline-block; margin-top: 1.1rem;
+      font-size: 0.8rem; font-weight: 700; color: var(--accent);
+    }
+
+    /* ============================ PROJEKT ========================== */
+    .projects { background: var(--bg-soft); }
+    .projects-grid { display: grid; gap: 1.5rem; margin-top: 2.5rem; }
+    .project-card {
+      display: grid; gap: 1.5rem; align-items: center;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .project-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-soft); border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+    @media (min-width: 900px) {
+      .project-card { grid-template-columns: 1fr 1fr; }
+      .project-card:nth-child(even) .project-art { order: 2; }
+    }
+
+    .project-art { padding: 2rem; background: linear-gradient(160deg, rgba(255, 184, 48, 0.10), rgba(61, 220, 151, 0.06)); }
+    .project-art svg { width: 100%; height: auto; max-height: 15rem; }
+    .project-info { padding: 1.5rem 1.9rem 1.9rem; }
+    .project-info h3 { margin-bottom: 0.7rem; }
+    .project-info p { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 1.2rem; }
+    .project-meta { display: flex; flex-wrap: wrap; gap: 1.25rem; }
+    .project-meta div strong { display: block; color: var(--accent); font-size: 1.15rem; }
+    .project-meta div span { color: var(--text-faint); font-size: 0.8rem; font-weight: 600; }
+
+    /* ============================ PROCESS =========================== */
+    .process-steps { display: grid; gap: 1.25rem; margin-top: 2.5rem; counter-reset: step; }
+    @media (min-width: 760px) { .process-steps { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1200px) { .process-steps { grid-template-columns: repeat(4, 1fr); } }
+
+    .step {
+      position: relative; padding: 2rem 1.6rem 1.8rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .step:hover { transform: translateY(-5px); border-color: color-mix(in srgb, var(--accent) 45%, transparent); }
+    .step::before {
+      counter-increment: step; content: "0" counter(step);
+      font-size: 2.6rem; font-weight: 800; letter-spacing: -0.03em;
+      background: var(--gradient-cta);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+      display: block; margin-bottom: 0.75rem;
+    }
+    .step h3 { font-size: 1.15rem; margin-bottom: 0.55rem; }
+    .step p { color: var(--text-dim); font-size: 0.92rem; }
+
+    /* ============================= PRISER =========================== */
+    .pricing { background: var(--bg-soft); }
+    .pricing-grid { display: grid; gap: 1.4rem; margin-top: 2.5rem; align-items: stretch; }
+    @media (min-width: 900px) { .pricing-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .price-card {
+      display: flex; flex-direction: column;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 2.2rem 2rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .price-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-soft); }
+    .price-card.featured {
+      border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+      box-shadow: var(--shadow-glow);
+      position: relative;
+    }
+    @media (min-width: 900px) {
+      .price-card.featured { transform: scale(1.04); }
+      .price-card.featured:hover { transform: scale(1.04) translateY(-6px); }
+    }
+    .price-flag {
+      position: absolute; top: -0.85rem; left: 50%; transform: translateX(-50%);
+      background: var(--gradient-cta); color: var(--accent-contrast);
+      font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.35rem 1rem; border-radius: 999px; white-space: nowrap;
+    }
+    .price-name { font-weight: 700; color: var(--text-dim); margin-bottom: 0.4rem; }
+    .price-amount { font-size: clamp(2.2rem, 3vw, 3rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1.4rem; }
+    .price-amount small { font-size: 1rem; color: var(--text-faint); font-weight: 600; }
+    .price-features { list-style: none; display: grid; gap: 0.7rem; margin-bottom: 2rem; flex-grow: 1; }
+    .price-features li { display: flex; gap: 0.65rem; align-items: flex-start; color: var(--text-dim); font-size: 0.95rem; }
+    .price-features svg { width: 1.15rem; height: 1.15rem; flex-shrink: 0; color: var(--green); margin-top: 0.2rem; }
+    .price-card .btn { width: 100%; }
+
+    /* ============================ OMDÖMEN =========================== */
+    .testimonial {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 2rem;
+      display: flex; flex-direction: column; gap: 1.25rem;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .testimonial:hover { transform: translateY(-5px); border-color: color-mix(in srgb, var(--accent) 35%, transparent); }
+    .stars { color: var(--accent); letter-spacing: 0.2em; font-size: 0.95rem; }
+    .testimonial blockquote { color: var(--text-dim); font-size: 0.98rem; flex-grow: 1; }
+    .testimonial-person { display: flex; align-items: center; gap: 0.9rem; }
+    .avatar {
+      width: 2.9rem; height: 2.9rem; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1rem; color: var(--accent-contrast);
+      background: var(--gradient-cta); flex-shrink: 0;
+    }
+    .testimonial-person strong { display: block; font-size: 0.95rem; }
+    .testimonial-person span { color: var(--text-faint); font-size: 0.82rem; }
+
+    /* ============================== FAQ ============================= */
+    .faq-list { max-width: 50rem; margin: 2.5rem auto 0; display: grid; gap: 0.9rem; }
+    .faq-item {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      transition: border-color 0.25s ease;
+    }
+    .faq-item[open] { border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+    .faq-item summary {
+      list-style: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      padding: 1.2rem 1.5rem; font-weight: 700; font-size: 1.02rem;
+      user-select: none;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary .chevron { transition: transform 0.3s ease; color: var(--accent); flex-shrink: 0; }
+    .faq-item[open] summary .chevron { transform: rotate(180deg); }
+    .faq-item .faq-body { padding: 0 1.5rem 1.4rem; color: var(--text-dim); font-size: 0.95rem; }
+
+    /* ============================ CTA-BAND ========================== */
+    .cta-band { padding: 0; }
+    .cta-band-inner {
+      background:
+        radial-gradient(ellipse 60% 100% at 85% 0%, rgba(255, 157, 46, 0.35), transparent 60%),
+        radial-gradient(ellipse 50% 100% at 10% 100%, rgba(61, 220, 151, 0.20), transparent 60%),
+        linear-gradient(135deg, #16223d, #0e1830);
+      border: 1px solid var(--border); border-radius: var(--radius-lg);
+      padding: clamp(2.5rem, 6vw, 5rem);
+      text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
+    }
+    html[data-theme="light"] .cta-band-inner {
+      background:
+        radial-gradient(ellipse 60% 100% at 85% 0%, rgba(255, 157, 46, 0.30), transparent 60%),
+        radial-gradient(ellipse 50% 100% at 10% 100%, rgba(61, 220, 151, 0.18), transparent 60%),
+        linear-gradient(135deg, #ffffff, #eef3fb);
+    }
+    .cta-band h2 { max-width: 30ch; }
+    .cta-band p { color: var(--text-dim); max-width: 40rem; }
+
+    /* ============================ KONTAKT =========================== */
+    .contact-grid { display: grid; gap: 2.5rem; margin-top: 2.5rem; }
+    @media (min-width: 1000px) { .contact-grid { grid-template-columns: 0.9fr 1.1fr; } }
+
+    .contact-info { display: grid; gap: 1.5rem; align-content: start; }
+    .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
+    .contact-item .card-icon { width: 2.7rem; height: 2.7rem; margin: 0; border-radius: 0.8rem; flex-shrink: 0; }
+    .contact-item .card-icon svg { width: 1.3rem; height: 1.3rem; }
+    .contact-item strong { display: block; margin-bottom: 0.15rem; }
+    .contact-item span { color: var(--text-dim); font-size: 0.95rem; }
+    .contact-item a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .contact-item a:hover { text-decoration: underline; }
+
+    form.contact-form {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: clamp(1.5rem, 3vw, 2.5rem);
+      display: grid; gap: 1.2rem;
+    }
+    .form-row { display: grid; gap: 1.2rem; }
+    @media (min-width: 640px) { .form-row { grid-template-columns: 1fr 1fr; } }
+
+    .field label { display: block; font-weight: 700; font-size: 0.9rem; margin-bottom: 0.45rem; }
+    .field input, .field select, .field textarea {
+      width: 100%; font: inherit; color: var(--text);
+      background: var(--bg-soft); border: 1px solid var(--border);
+      border-radius: 0.8rem; padding: 0.85rem 1rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .field textarea { resize: vertical; min-height: 8rem; }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      outline: none; border-color: var(--accent);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+    }
+    .field.error input, .field.error select, .field.error textarea { border-color: #ff6b6b; }
+    .field .error-msg { display: none; color: #ff8585; font-size: 0.8rem; margin-top: 0.35rem; font-weight: 600; }
+    .field.error .error-msg { display: block; }
+
+    .form-success {
+      display: none; text-align: center; padding: 1.25rem;
+      background: color-mix(in srgb, var(--green) 12%, transparent);
+      border: 1px solid color-mix(in srgb, var(--green) 45%, transparent);
+      color: var(--green); font-weight: 700; border-radius: 0.8rem;
+    }
+    .form-success.show { display: block; animation: fadeup 0.4s ease; }
+    @keyframes fadeup { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+    /* ============================= FOOTER =========================== */
+    .site-footer { border-top: 1px solid var(--border); background: var(--bg-soft); padding: 3.5rem 0 2rem; }
+    .footer-grid { display: grid; gap: 2.5rem; }
+    @media (min-width: 800px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1.4fr; } }
+    .footer-col h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-faint); margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; display: grid; gap: 0.6rem; }
+    .footer-col a { color: var(--text-dim); text-decoration: none; font-size: 0.92rem; transition: color 0.2s ease; }
+    .footer-col a:hover { color: var(--accent); }
+    .footer-about p { color: var(--text-dim); font-size: 0.92rem; margin-top: 1rem; max-width: 22rem; }
+    .footer-bottom {
+      margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+      display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem;
+      color: var(--text-faint); font-size: 0.85rem;
+    }
+
+    /* ==================== ANIMATION VID SCROLL ====================== */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: var(--reveal-delay, 0s);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* Respektera användare som vill ha mindre rörelse */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    /* Fokus-indikering för tangentbordsanvändare */
+    a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+      outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 0.4rem;
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Hoppa till innehåll</a>
+
+  <!-- ============================ HEADER ============================ -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a class="brand" href="#hem" aria-label="Solverket — till startsidan">
+        <svg class="brand-logo" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <circle cx="24" cy="24" r="9" fill="#ffb830"/>
+          <g stroke="#ffb830" stroke-width="2.6" stroke-linecap="round">
+            <path d="M24 4v5M24 39v5M4 24h5M39 24h5M9.9 9.9l3.5 3.5M34.6 34.6l3.5 3.5M9.9 38.1l3.5-3.5M34.6 13.4l3.5-3.5"/>
+          </g>
+        </svg>
+        <span class="brand-name">Solver<em>ket</em></span>
+      </a>
+
+      <nav class="nav-desktop" aria-label="Huvudmeny">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="#tjanster">Tjänster</a></li>
+          <li><a class="nav-link" href="#projekt">Projekt</a></li>
+          <li><a class="nav-link" href="#process">Process</a></li>
+          <li><a class="nav-link" href="#priser">Priser</a></li>
+          <li><a class="nav-link" href="#faq">Frågor</a></li>
+          <li><a class="nav-link" href="#kontakt">Kontakt</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Växla mellan mörkt och ljust tema">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+          </svg>
+        </button>
+        <a class="btn btn-primary header-cta" href="#kontakt">Fri solanalys</a>
+        <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Öppna meny">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobilmeny -->
+  <nav class="nav-mobile" id="mobileMenu" aria-label="Mobilmeny">
+    <ul>
+      <li><a href="#tjanster">Tjänster</a></li>
+      <li><a href="#projekt">Projekt</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#priser">Priser</a></li>
+      <li><a href="#faq">Frågor &amp; svar</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+      <li><a class="btn btn-primary" href="#kontakt">Fri solanalys</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+
+    <!-- ============================= HERO ============================= -->
+    <section class="hero" id="hem" aria-label="Intro">
+      <div class="container hero-grid">
+        <div>
+          <p class="hero-badge"><span class="pulse" aria-hidden="true"></span> Över 2 400 anläggningar installerade i Norden</p>
+          <h1>Solen jobbar.<br><span class="gradient-text">Vi ser till att du får betalt.</span></h1>
+          <p class="lead">Solverket designar, installerar och underhåller solenergianläggningar för svenska hus och företag. Enkel process, svenska garantier och upp till <strong>90&nbsp;%</strong> lägre elräkning.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" href="#kontakt">
+              Boka fri solanalys
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="btn btn-ghost btn-lg" href="#projekt">Se våra projekt</a>
+          </div>
+          <div class="hero-stats" role="list">
+            <div class="hero-stat" role="listitem"><div class="num" data-count="2400" data-suffix="+">0</div><div class="lbl">Installerade anläggningar</div></div>
+            <div class="hero-stat" role="listitem"><div class="num" data-count="98" data-suffix="%">0</div><div class="lbl">Nöjda kunder</div></div>
+            <div class="hero-stat" role="listitem"><div class="num" data-count="25" data-suffix=" år">0</div><div class="lbl">Garanti på paneler</div></div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <svg class="sun-scene" viewBox="0 0 400 400" fill="none">
+            <!-- Omloppsbanor -->
+            <g class="orbit">
+              <circle cx="200" cy="200" r="150" stroke="rgba(255,184,48,0.25)" stroke-width="1.5" stroke-dasharray="4 8"/>
+              <circle cx="200" cy="50" r="8" fill="#ffb830"/>
+            </g>
+            <g class="orbit-rev">
+              <circle cx="200" cy="200" r="105" stroke="rgba(61,220,151,0.3)" stroke-width="1.5" stroke-dasharray="3 7"/>
+              <circle cx="200" cy="95" r="6" fill="#3ddc97"/>
+              <rect x="337" y="194" width="26" height="12" rx="3" fill="rgba(255,184,48,0.7)" transform="rotate(90 350 200)"/>
+            </g>
+            <!-- Sol -->
+            <g class="sun-core">
+              <circle cx="200" cy="200" r="58" fill="url(#sunGrad)"/>
+              <circle cx="200" cy="200" r="74" stroke="rgba(255,184,48,0.4)" stroke-width="1.5"/>
+            </g>
+            <!-- Panel-ikoner -->
+            <g transform="translate(140 258)" opacity="0.9">
+              <rect width="120" height="66" rx="6" fill="#16223d" stroke="rgba(255,255,255,0.15)"/>
+              <path d="M40 0v66M80 0v66M0 22h120M0 44h120" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+              <path d="M60 66v18M40 84h40" stroke="rgba(255,255,255,0.3)" stroke-width="2.5" stroke-linecap="round"/>
+            </g>
+            <defs>
+              <radialGradient id="sunGrad" cx="0.35" cy="0.3" r="0.9">
+                <stop offset="0" stop-color="#ffd97a"/>
+                <stop offset="0.55" stop-color="#ffb830"/>
+                <stop offset="1" stop-color="#ff8c1a"/>
+              </radialGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+      <div class="scroll-hint" aria-hidden="true">
+        Scrolla
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+    </section>
+
+    <!-- ======================== FÖRTROENDE-BAR ======================== -->
+    <div class="trustbar" aria-label="Certifieringar">
+      <div class="container trustbar-inner">
+        <span class="trustbar-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3 6.5 7 .9-5 4.8 1.2 7-6.2-3.4L5.8 21 7 14.2 2 9.4l7-.9z"/></svg>
+          Elkvalitetscertifierade installatörer
+        </span>
+        <span class="trustbar-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          25 års produktgaranti
+        </span>
+        <span class="trustbar-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="M22 4L12 14l-3-3"/></svg>
+          Godkänd för grön teknik-avdrag
+        </span>
+        <span class="trustbar-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Installation på 6–8 veckor
+        </span>
+      </div>
+    </div>
+
+    <!-- ============================ TJÄNSTER ========================== -->
+    <section id="tjanster" aria-labelledby="tjanster-h">
+      <div class="container">
+        <p class="section-label reveal">Våra tjänster</p>
+        <h2 id="tjanster-h" class="reveal">Allt du behöver. Under ett tak.</h2>
+        <p class="lead reveal">Från första analys till färdig anläggning och drift – vi tar hela ansvaret så att du kan luta dig tillbaka.</p>
+
+        <div class="cards-grid">
+          <article class="card reveal" style="--reveal-delay: 0s">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+            </div>
+            <h3>Solpaneler för villor</h3>
+            <p>Skräddarsydd anläggning efter ditt tak, din förbrukning och din budget. Vi sköter bygglov, nätanslutning och rotavdrag.</p>
+            <span class="card-tag">Från 78 000 kr</span>
+          </article>
+
+          <article class="card reveal" style="--reveal-delay: 0.08s">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
+            </div>
+            <h3>Företagsanläggningar</h3>
+            <p>Stora takytor? Vi projekterar och installerar anläggningar på 100–5 000 kWp med driftsuppföljning och serviceavtal.</p>
+            <span class="card-tag">Egen projektledare</span>
+          </article>
+
+          <article class="card reveal" style="--reveal-delay: 0.16s">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="13" rx="2"/><path d="M16 3l-6 4-2-4M2 13h20M7 13v3M11 13v3M15 13v3M19 13v3"/></svg>
+            </div>
+            <h3>Batterilagring</h3>
+            <p>Lagra överskottet från dagen och använd det kvällar och nätter. Smart laddning mot elpriset, helt automatiskt.</p>
+            <span class="card-tag">10 års garanti</span>
+          </article>
+
+          <article class="card reveal" style="--reveal-delay: 0.24s">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+            </div>
+            <h3>Laddstationer</h3>
+            <p>Elbilsladdning hemma eller på jobbet, integrerad med din solcellsanläggning för billigast möjliga laddning.</p>
+            <span class="card-tag">Från 11 500 kr</span>
+          </article>
+
+          <article class="card reveal" style="--reveal-delay: 0.32s">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 0 0 8-8c0-4-3-6-8-7-5 1-8 3-8 7a8 8 0 0 0 8 8z"/><path d="M12 22v-4M12 5c0-1.5 1-2.5 2-3"/></svg>
+            </div>
+            <h3>Service &amp; underhåll</h3>
+            <p>Årlig besiktning, rengöring och driftövervakning dygnet runt. Vi upptäcker fel innan du ens märker dem.</p>
+            <span class="card-tag">Från 1 900 kr/år</span>
+          </article>
+
+          <article class="card reveal" style="--reveal-delay: 0.4s">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-9 4 18 3-9h6"/></svg>
+            </div>
+            <h3>Energioptimering</h3>
+            <p>Vi analyserar din förbrukning och optimerar produktion, lagring och laddning så att varje kilowattimme räknas.</p>
+            <span class="card-tag">Ingår alltid</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ PROJEKT ========================== -->
+    <section class="projects" id="projekt" aria-labelledby="projekt-h">
+      <div class="container">
+        <p class="section-label reveal">Utförda projekt</p>
+        <h2 id="projekt-h" class="reveal">Riktiga tak. Riktiga resultat.</h2>
+
+        <div class="projects-grid">
+          <article class="project-card reveal">
+            <div class="project-art" aria-hidden="true">
+              <svg viewBox="0 0 400 220" fill="none">
+                <path d="M30 120 L200 40 L370 120" stroke="rgba(255,184,48,0.5)" stroke-width="3" stroke-linecap="round"/>
+                <path d="M200 40 L370 120 L370 150 L30 150 L30 120 Z" fill="rgba(255,184,48,0.08)" stroke="rgba(255,184,48,0.35)" stroke-width="2"/>
+                <g fill="url(#panelGrad1)">
+                  <rect x="110" y="88" width="46" height="30" rx="3" transform="skewX(-16)"/>
+                  <rect x="165" y="72" width="46" height="30" rx="3" transform="skewX(-16)"/>
+                  <rect x="220" y="88" width="46" height="30" rx="3" transform="skewX(-16)"/>
+                </g>
+                <circle cx="340" cy="55" r="20" fill="#ffb830" opacity="0.9"/>
+                <defs><linearGradient id="panelGrad1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2e5cff" stop-opacity="0.85"/><stop offset="1" stop-color="#122a6e" stop-opacity="0.85"/></linearGradient></defs>
+              </svg>
+            </div>
+            <div class="project-info">
+              <h3>Familjen Lindqvist, Nacka</h3>
+              <p>Villa med svagt sydvästligt tak. 16 paneler på 6,8 kWp kombinerat med en 10 kWh batteribank – sänkte elräkningen med 87 % under det första året.</p>
+              <div class="project-meta">
+                <div><strong>6,8 kWp</strong><span>Anläggning</span></div>
+                <div><strong>87 %</strong><span>Lägre elkostnad</span></div>
+                <div><strong>4,5 år</strong><span>Återbetalning</span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-art" aria-hidden="true">
+              <svg viewBox="0 0 400 220" fill="none">
+                <rect x="60" y="70" width="280" height="90" rx="6" fill="rgba(255,255,255,0.04)" stroke="rgba(61,220,151,0.4)" stroke-width="2"/>
+                <g stroke="rgba(61,220,151,0.55)" stroke-width="2">
+                  <path d="M60 100h280M60 130h280M130 70v90M200 70v90M270 70v90"/>
+                </g>
+                <rect x="230" y="30" width="26" height="26" rx="4" fill="#3ddc97" opacity="0.9"/>
+                <circle cx="90" cy="28" r="14" fill="#ffb830" opacity="0.85"/>
+              </svg>
+            </div>
+            <div class="project-info">
+              <h3>Verktygs AB Ström, Jönköping</h3>
+              <p>Lagerbyggnad på 4 000 m². Vi installerade 820 paneler (350 kWp) utan att störa verksamheten – all montering skedde på kvällar och helger.</p>
+              <div class="project-meta">
+                <div><strong>350 kWp</strong><span>Anläggning</span></div>
+                <div><strong>62 %</strong><span>Egen förbrukning</span></div>
+                <div><strong>2 200</strong><span>Paneler totalt (alla tak)</span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-art" aria-hidden="true">
+              <svg viewBox="0 0 400 220" fill="none">
+                <path d="M80 170 Q200 40 320 170" stroke="rgba(255,184,48,0.45)" stroke-width="3" stroke-dasharray="1 9" stroke-linecap="round"/>
+                <g>
+                  <rect x="130" y="120" width="140" height="52" rx="5" fill="rgba(255,184,48,0.10)" stroke="rgba(255,184,48,0.45)" stroke-width="2"/>
+                  <path d="M165 120v52M200 120v52M235 120v52M130 146h140" stroke="rgba(255,184,48,0.3)" stroke-width="1.5"/>
+                </g>
+                <circle cx="320" cy="52" r="16" fill="#ffb830"/>
+                <path d="M200 96 c0-14 10-24 22-26" stroke="rgba(61,220,151,0.7)" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="project-info">
+              <h3>Höglofts Gård, Skåne</h3>
+              <p>Lantbruksfastighet med spannmålstorkning – en riktig elätare. 44 kWp på ekonomibyggnaden plus styrning som flyttar torkningen till soltimmar.</p>
+              <div class="project-meta">
+                <div><strong>44 kWp</strong><span>Anläggning</span></div>
+                <div><strong>210 MWh</strong><span>Produktion/år (gården totalt)</span></div>
+                <div><strong>3,1 år</strong><span>Återbetalning</span></div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ PROCESS =========================== -->
+    <section id="process" aria-labelledby="process-h">
+      <div class="container">
+        <p class="section-label reveal">Så arbetar vi</p>
+        <h2 id="process-h" class="reveal">Från första samtal till ström i vägguttaget</h2>
+
+        <div class="process-steps">
+          <div class="step reveal" style="--reveal-delay: 0s">
+            <h3>Solanalys</h3>
+            <p>Vi kollar ditt tak digitalt och räknar på din förbrukning. Du får ett tydligt beslutsunderlag med produktionsprognos och lönsamhet – helt kostnadsfritt.</p>
+          </div>
+          <div class="step reveal" style="--reveal-delay: 0.08s">
+            <h3>Design &amp; offert</h3>
+            <p>Du får en 3D-visualisering av anläggningen på just ditt tak, med fast pris och tydlig tidplan. Inga dolda kostnader, någonsin.</p>
+          </div>
+          <div class="step reveal" style="--reveal-delay: 0.16s">
+            <h3>Installation</h3>
+            <p>Våra egna elektriker monterar och kopplar upp anläggningen, oftast på 1–2 dagar. Vi hanterar bygglov och ansökan till nätägaren.</p>
+          </div>
+          <div class="step reveal" style="--reveal-delay: 0.24s">
+            <h3>Drift &amp; uppföljning</h3>
+            <p>App med live-produktion, årsbesiktning och övervakning som larmar till oss – inte till dig. Du får producera, vi får ansvara.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= PRISER =========================== -->
+    <section class="pricing" id="priser" aria-labelledby="priser-h">
+      <div class="container">
+        <p class="section-label reveal">Priser</p>
+        <h2 id="priser-h" class="reveal">Transparenta priser. Inga överraskningar.</h2>
+        <p class="lead reveal">Alla paket inkluderar design, bygglovshantering, installation och driftsättning. Grönt teknik-avdrag är redan avräknat.</p>
+
+        <div class="pricing-grid">
+          <div class="price-card reveal" style="--reveal-delay: 0s">
+            <p class="price-name">Hem</p>
+            <p class="price-amount">78 000 kr<small> / fast pris</small></p>
+            <ul class="price-features">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> 6–8 kWp anläggning</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> App med produktionsdata</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> 12 års installationsgaranti</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Rotavdrag hanteras av oss</li>
+            </ul>
+            <a class="btn btn-ghost" href="#kontakt">Begär offert</a>
+          </div>
+
+          <div class="price-card featured reveal" style="--reveal-delay: 0.1s">
+            <span class="price-flag">Mest valda</span>
+            <p class="price-name">Hem Plus</p>
+            <p class="price-amount">119 000 kr<small> / fast pris</small></p>
+            <ul class="price-features">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Allt i Hem-paketet</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> 10 kWh batteribank</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Smart elpris-styrning</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> 25 års produktgaranti</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> 3 års serviceavgift ingår</li>
+            </ul>
+            <a class="btn btn-primary" href="#kontakt">Begär offert</a>
+          </div>
+
+          <div class="price-card reveal" style="--reveal-delay: 0.2s">
+            <p class="price-name">Företag</p>
+            <p class="price-amount">Efter bruk<small> / offert</small></p>
+            <ul class="price-features">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> 50–5 000 kWp</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Dedikerad projektledare</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Driftövervakning 24/7</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Serviceavtal &amp; besiktning</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Hjälp med investeringskalkyl</li>
+            </ul>
+            <a class="btn btn-ghost" href="#kontakt">Prata med oss</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ OMDÖMEN =========================== -->
+    <section id="omdomen" aria-labelledby="omdomen-h">
+      <div class="container">
+        <p class="section-label reveal">Omdömen</p>
+        <h2 id="omdomen-h" class="reveal">Vad våra kunder säger</h2>
+
+        <div class="cards-grid">
+          <figure class="testimonial reveal" style="--reveal-delay: 0s">
+            <div class="stars" aria-label="5 av 5 stjärnor">★★★★★</div>
+            <blockquote>"Från första samtalet till driftsättning tog det sju veckor. Allt kändes professionellt och offerten höll exakt. Elräkningen i mars var 212 kr – den brukar vara 2 400."</blockquote>
+            <figcaption class="testimonial-person">
+              <span class="avatar" aria-hidden="true">AL</span>
+              <div><strong>Anna Lindqvist</strong><span>Villaägare, Nacka</span></div>
+            </figcaption>
+          </figure>
+
+          <figure class="testimonial reveal" style="--reveal-delay: 0.08s">
+            <div class="stars" aria-label="5 av 5 stjärnor">★★★★★</div>
+            <blockquote>"Vi hade tre offerter. Solverket var den enda som visade beräkningen bakom siffrorna istället för att bara trycka på 'köp nu'. Det avgjorde valet – och de har hållit vad de lovade."</blockquote>
+            <figcaption class="testimonial-person">
+              <span class="avatar" aria-hidden="true">PS</span>
+              <div><strong>Peter Ström</strong><span>VD, Verktygs AB Ström</span></div>
+            </figcaption>
+          </figure>
+
+          <figure class="testimonial reveal" style="--reveal-delay: 0.16s">
+            <div class="stars" aria-label="5 av 5 stjärnor">★★★★★</div>
+            <blockquote>"Serviceavtalet är värt varenda krona. En panel fungerade dåligt en julvecka – jag behövde inte göra ett endaste samtal, de ringde mig och fixade det inom två dagar."</blockquote>
+            <figcaption class="testimonial-person">
+              <span class="avatar" aria-hidden="true">KH</span>
+              <div><strong>Karin Helgesson</strong><span>Lantbrukare, Skåne</span></div>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== FAQ ============================= -->
+    <section id="faq" aria-labelledby="faq-h">
+      <div class="container">
+        <p class="section-label reveal">Frågor &amp; svar</p>
+        <h2 id="faq-h" class="reveal">Det undrar många om</h2>
+
+        <div class="faq-list">
+          <details class="faq-item reveal">
+            <summary>
+              Hur länge tar det innan anläggningen är driftklar?
+              <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <p class="faq-body">Normalt 6–8 veckor från signerad offert. Den längsta delen är oftast nätägarens godkännande av anslutningen, vilket vi följer upp löpande. Själva installationen tar bara 1–2 dagar.</p>
+          </details>
+
+          <details class="faq-item reveal">
+            <summary>
+              Betalar det sig verkligen i Sverige?
+              <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <p class="faq-body">Ja. Panelerna producerar även under molniga dagar, och med stigande elpriser ligger återbetalningstiden för de flesta villaanläggningar på 5–9 år – medan panelerna håller 30+ år. Vi visar alltid beräkningen för just ditt tak innan du bestämmer dig.</p>
+          </details>
+
+          <details class="faq-item reveal">
+            <summary>
+              Vad händer med snön på panelerna?
+              <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <p class="faq-body">Snö glider av de släta ytorna när solen kommer tillbaka, och produktionen under vintern är ändå bara cirka 5 % av den årliga totalen. Att skotta snö från panelerna är onödigt – och kan skada dem.</p>
+          </details>
+
+          <details class="faq-item reveal">
+            <summary>
+              Hur fungerar garantin?
+              <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <p class="faq-body">Du får 25 års produktgaranti på paneler, 12 års garanti på installationsarbetet och 10 års garanti på batteribanker. Alla garantier är svenska – du slipper diskutera med utländska tillverkare, vi sköter det åt dig.</p>
+          </details>
+
+          <details class="faq-item reveal">
+            <summary>
+              Kan jag behålla mitt elavtal?
+              <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <p class="faq-body">Absolut. Anläggningen kopplas in bakom din huvudsäkring och påverkar inte ditt avtal. Vi rekommenderar gärna ett avtal med bra villkor för överskottsförsäljning, men valet är alltid ditt.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ CTA-BAND ========================== -->
+    <section class="cta-band" aria-label="Kontakt-uppmaning">
+      <div class="container">
+        <div class="cta-band-inner reveal">
+          <h2>Redo att sluta betala för onödig el?</h2>
+          <p>Boka en kostnadsfri solanalys. En av våra ingenjörer räknar på ditt tak och ger dig en ärlig bedömning – även om svaret är att sol inte lönar sig för dig.</p>
+          <a class="btn btn-primary btn-lg" href="#kontakt">Boka gratis analys</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ KONTAKT =========================== -->
+    <section id="kontakt" aria-labelledby="kontakt-h">
+      <div class="container">
+        <p class="section-label reveal">Kontakt</p>
+        <h2 id="kontakt-h" class="reveal">Prata med oss</h2>
+
+        <div class="contact-grid">
+          <div class="contact-info">
+            <div class="contact-item reveal">
+              <div class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.4 2.1L8.1 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.6 2z"/></svg>
+              </div>
+              <div>
+                <strong>Ring oss</strong>
+                <span>Mån–fre 08–17: <a href="tel:+46812345678">08-123 456 78</a></span>
+              </div>
+            </div>
+            <div class="contact-item reveal" style="--reveal-delay: 0.08s">
+              <div class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+              </div>
+              <div>
+                <strong>Mejl</strong>
+                <span><a href="mailto:hej@solverket.se">hej@solverket.se</a> – svar samma dag</span>
+              </div>
+            </div>
+            <div class="contact-item reveal" style="--reveal-delay: 0.16s">
+              <div class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div>
+                <strong>Besök oss</strong>
+                <span>Solvägen 12, 111 22 Stockholm (med kontor i Göteborg, Malmö och Umeå)</span>
+              </div>
+            </div>
+            <div class="contact-item reveal" style="--reveal-delay: 0.24s">
+              <div class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              </div>
+              <div>
+                <strong>Öppettider</strong>
+                <span>Mån–fre 08:00–17:00, lör 10:00–14:00</span>
+              </div>
+            </div>
+          </div>
+
+          <form class="contact-form reveal" id="contactForm" novalidate>
+            <div class="form-row">
+              <div class="field">
+                <label for="name">Namn *</label>
+                <input type="text" id="name" name="name" autocomplete="name" placeholder="För- och efternamn" required />
+                <p class="error-msg">Fyll i ditt namn.</p>
+              </div>
+              <div class="field">
+                <label for="email">Mejl *</label>
+                <input type="email" id="email" name="email" autocomplete="email" placeholder="namn@exempel.se" required />
+                <p class="error-msg">Fyll i en giltig mejladress.</p>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field">
+                <label for="phone">Telefon</label>
+                <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="07X-XXX XX XX" />
+                <p class="error-msg"></p>
+              </div>
+              <div class="field">
+                <label for="type">Jag är…</label>
+                <select id="type" name="type">
+                  <option value="villa">Villaägare</option>
+                  <option value="foretag">Företag</option>
+                  <option value="lantbruk">Lantbrukare</option>
+                  <option value="bostadsratt">Bostadsrättsförening</option>
+                </select>
+                <p class="error-msg"></p>
+              </div>
+            </div>
+            <div class="field">
+              <label for="message">Meddelande *</label>
+              <textarea id="message" name="message" placeholder="Berätta kort om din fastighet, din årsförbrukning och vad du funderar på…" required></textarea>
+              <p class="error-msg">Skriv några rader så vi kan hjälpa dig bäst.</p>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg">Skicka förfrågan</button>
+            <p class="form-success" id="formSuccess" role="status">✅ Tack! Vi återkommer med en solanalys inom 24 timmar.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================= FOOTER ============================ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col footer-about">
+          <a class="brand" href="#hem">
+            <svg class="brand-logo" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+              <circle cx="24" cy="24" r="9" fill="#ffb830"/>
+              <g stroke="#ffb830" stroke-width="2.6" stroke-linecap="round">
+                <path d="M24 4v5M24 39v5M4 24h5M39 24h5M9.9 9.9l3.5 3.5M34.6 34.6l3.5 3.5M9.9 38.1l3.5-3.5M34.6 13.4l3.5-3.5"/>
+              </g>
+            </svg>
+            <span class="brand-name">Solver<em>ket</em></span>
+          </a>
+          <p>Svenskt solenergiföretag sedan 2016. Vi gör det enkelt att producera egen el – ärligt, transparent och med svenska garantier.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Företaget</h4>
+          <ul>
+            <li><a href="#omdomen">Omdömen</a></li>
+            <li><a href="#projekt">Projekt</a></li>
+            <li><a href="#process">Vår process</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Tjänster</h4>
+          <ul>
+            <li><a href="#tjanster">Solpaneler</a></li>
+            <li><a href="#tjanster">Batterilagring</a></li>
+            <li><a href="#tjanster">Laddstationer</a></li>
+            <li><a href="#tjanster">Serviceavtal</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Kontakt</h4>
+          <ul>
+            <li><a href="tel:+46812345678">08-123 456 78</a></li>
+            <li><a href="mailto:hej@solverket.se">hej@solverket.se</a></li>
+            <li><a href="#kontakt">Solvägen 12, Stockholm</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> Solverket AB. Org.nr 556677-8899.</span>
+        <span>Integritetspolicy · Villkor · Cookies</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ============================================================
+       SOLVERKET — Interaktivitet
+       Vanilla JavaScript, inga beroenden.
+       ============================================================ */
+    (function () {
+      "use strict";
+
+      /* ---------- Tema (mörkt/ljust) med localStorage ---------- */
+      var themeToggle = document.getElementById("themeToggle");
+      var root = document.documentElement;
+
+      function applyTheme(theme) {
+        if (theme === "light") root.setAttribute("data-theme", "light");
+        else root.removeAttribute("data-theme");
+        try { localStorage.setItem("solverket-theme", theme); } catch (e) { /* lagring kan vara blockerad */ }
+      }
+
+      var savedTheme = null;
+      try { savedTheme = localStorage.getItem("solverket-theme"); } catch (e) {}
+      var prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      applyTheme(savedTheme || (prefersLight ? "light" : "dark"));
+
+      themeToggle.addEventListener("click", function () {
+        var isLight = root.getAttribute("data-theme") === "light";
+        applyTheme(isLight ? "dark" : "light");
+      });
+
+      /* ---------- Mobilmeny ---------- */
+      var menuToggle = document.getElementById("menuToggle");
+      var mobileMenu = document.getElementById("mobileMenu");
+
+      function closeMenu() {
+        mobileMenu.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Öppna meny");
+      }
+      menuToggle.addEventListener("click", function () {
+        var open = mobileMenu.classList.toggle("open");
+        menuToggle.setAttribute("aria-expanded", String(open));
+        menuToggle.setAttribute("aria-label", open ? "Stäng meny" : "Öppna meny");
+      });
+      mobileMenu.querySelectorAll("a").forEach(function (a) {
+        a.addEventListener("click", closeMenu);
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeMenu();
+      });
+
+      /* ---------- Header: skugga vid scroll ---------- */
+      var header = document.getElementById("siteHeader");
+      function onScrollHeader() {
+        header.classList.toggle("scrolled", window.scrollY > 30);
+      }
+      window.addEventListener("scroll", onScrollHeader, { passive: true });
+      onScrollHeader();
+
+      /* ---------- Scroll-reveal (IntersectionObserver) ---------- */
+      var revealElems = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        var revealObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+        revealElems.forEach(function (el) { revealObserver.observe(el); });
+      } else {
+        revealElems.forEach(function (el) { el.classList.add("visible"); });
+      }
+
+      /* ---------- Räknare (hero-statistik) ---------- */
+      function animateCount(el) {
+        var target = parseInt(el.getAttribute("data-count"), 10) || 0;
+        var suffix = el.getAttribute("data-suffix") || "";
+        var duration = 1600;
+        var start = null;
+
+        function tick(ts) {
+          if (!start) start = ts;
+          var progress = Math.min((ts - start) / duration, 1);
+          // easeOutCubic för mjuk avslutning
+          var eased = 1 - Math.pow(1 - progress, 3);
+          var value = Math.floor(eased * target);
+          el.textContent = value.toLocaleString("sv-SE") + suffix;
+          if (progress < 1) requestAnimationFrame(tick);
+          else el.textContent = target.toLocaleString("sv-SE") + suffix;
+        }
+        requestAnimationFrame(tick);
+      }
+
+      var counters = document.querySelectorAll("[data-count]");
+      if ("IntersectionObserver" in window) {
+        var countObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              animateCount(entry.target);
+              countObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.6 });
+        counters.forEach(function (el) { countObserver.observe(el); });
+      } else {
+        counters.forEach(function (el) {
+          el.textContent = (parseInt(el.getAttribute("data-count"), 10) || 0).toLocaleString("sv-SE") + (el.getAttribute("data-suffix") || "");
+        });
+      }
+
+      /* ---------- Scrollspy: aktiv länk i menyn ---------- */
+      var sections = ["hem", "tjanster", "projekt", "process", "priser", "faq", "kontakt"]
+        .map(function (id) { return document.getElementById(id); })
+        .filter(Boolean);
+      var navLinks = document.querySelectorAll(".nav-list .nav-link");
+
+      function updateActiveLink() {
+        var scrollPos = window.scrollY + window.innerHeight * 0.35;
+        var currentId = sections.length ? sections[0].id : null;
+        sections.forEach(function (sec) {
+          if (sec.offsetTop <= scrollPos) currentId = sec.id;
+        });
+        navLinks.forEach(function (link) {
+          link.classList.toggle("active", link.getAttribute("href") === "#" + currentId);
+        });
+      }
+      window.addEventListener("scroll", updateActiveLink, { passive: true });
+      updateActiveLink();
+
+      /* ---------- Kontaktformulär med validering ---------- */
+      var form = document.getElementById("contactForm");
+      var success = document.getElementById("formSuccess");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var valid = true;
+
+        function checkField(inputId, validator) {
+          var input = document.getElementById(inputId);
+          var field = input.closest(".field");
+          var ok = validator(input.value.trim());
+          field.classList.toggle("error", !ok);
+          if (!ok) valid = false;
+          return ok;
+        }
+
+        checkField("name", function (v) { return v.length >= 2; });
+        checkField("email", function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); });
+        checkField("message", function (v) { return v.length >= 10; });
+
+        if (valid) {
+          form.reset();
+          success.classList.add("show");
+          success.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          setTimeout(function () { success.classList.remove("show"); }, 8000);
+        }
+      });
+
+      // Rensa felmeddelanden när användaren skriver
+      ["name", "email", "message"].forEach(function (id) {
+        var input = document.getElementById(id);
+        input.addEventListener("input", function () {
+          input.closest(".field").classList.remove("error");
+        });
+      });
+
+      /* ---------- Årtal i footern ---------- */
+      document.getElementById("year").textContent = String(new Date().getFullYear());
+    })();
+  </script>
+</body>
+</html>

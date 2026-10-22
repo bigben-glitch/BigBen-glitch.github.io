@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NORD Studio hjälper företag att växa med strategi, design och digitala upplevelser som gör skillnad.">
+  <meta name="theme-color" content="#11120f">
+  <title>NORD Studio — Digitalt som gör skillnad</title>
+  <style>
+    :root {
+      --bg: #f4f4ee;
+      --paper: #ffffff;
+      --ink: #171813;
+      --muted: #686a60;
+      --line: #dedfd6;
+      --dark: #11120f;
+      --dark-soft: #1c1e19;
+      --lime: #d5fa66;
+      --lime-deep: #b7df42;
+      --radius: 22px;
+      --content: 1600px;
+      --gutter: clamp(20px, 5.2vw, 88px);
+      --shadow: 0 18px 55px rgba(20, 24, 12, .09);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    body.menu-open { overflow: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea, select { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { color: inherit; }
+    img, svg { display: block; max-width: 100%; }
+    ::selection { color: var(--dark); background: var(--lime); }
+    .container { width: min(calc(100% - var(--gutter) * 2), var(--content)); margin-inline: auto; }
+    .section { padding-block: clamp(78px, 10vw, 150px); }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      color: var(--muted); font-size: .75rem; font-weight: 750;
+      letter-spacing: .14em; text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--lime-deep); }
+    .section-heading {
+      display: flex; justify-content: space-between; align-items: end;
+      gap: 36px; margin-bottom: 52px;
+    }
+    .section-heading h2 {
+      max-width: 780px; margin: 16px 0 0; font-size: clamp(2.3rem, 5vw, 5.2rem);
+      line-height: .99; letter-spacing: -.065em; font-weight: 650;
+    }
+    .section-heading p { max-width: 370px; margin: 0 0 5px; color: var(--muted); }
+    .accent { color: #727e46; }
+
+    /* Navigation */
+    .site-header {
+      position: sticky; top: 0; z-index: 100; background: rgba(244, 244, 238, .88);
+      backdrop-filter: blur(18px); border-bottom: 1px solid rgba(222, 223, 214, .7);
+    }
+    .nav { min-height: 82px; display: flex; justify-content: space-between; align-items: center; gap: 28px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; font-size: 1.15rem; font-weight: 850; letter-spacing: -.055em; }
+    .brand-mark { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 11px; background: var(--lime); color: var(--dark); }
+    .brand-mark svg { width: 21px; height: 21px; }
+    .nav-links { display: flex; align-items: center; gap: clamp(20px, 3vw, 44px); }
+    .nav-links a:not(.button) { color: #55574e; font-size: .9rem; font-weight: 600; transition: color .2s ease; }
+    .nav-links a:not(.button):hover { color: var(--ink); }
+    .button {
+      display: inline-flex; justify-content: center; align-items: center; gap: 12px;
+      min-height: 52px; padding: 0 22px; border: 1px solid transparent; border-radius: 100px;
+      background: var(--dark); color: #fff; font-size: .9rem; font-weight: 700;
+      cursor: pointer; transition: transform .2s ease, background .2s ease, color .2s ease;
+    }
+    .button:hover { transform: translateY(-2px); background: #32352b; }
+    .button svg { width: 17px; height: 17px; transition: transform .2s ease; }
+    .button:hover svg { transform: translateX(3px); }
+    .button-light { background: var(--lime); color: var(--dark); }
+    .button-light:hover { background: #e2ff91; }
+    .button-outline { color: var(--ink); background: transparent; border-color: var(--line); }
+    .button-outline:hover { background: white; }
+    .menu-toggle { display: none; width: 46px; height: 46px; border: 1px solid var(--line); border-radius: 50%; background: transparent; cursor: pointer; }
+    .menu-toggle svg { width: 21px; margin: auto; }
+
+    /* Hero */
+    .hero { padding: clamp(54px, 7.5vw, 116px) 0 70px; overflow: hidden; }
+    .hero-grid { display: grid; grid-template-columns: 1.04fr .96fr; align-items: center; gap: clamp(34px, 6vw, 96px); }
+    .hero h1 { max-width: 850px; margin: 22px 0 26px; font-size: clamp(3.7rem, 8.2vw, 8.8rem); line-height: .88; font-weight: 650; letter-spacing: -.085em; }
+    .hero h1 em { font-style: normal; color: #737e4d; }
+    .hero-copy { max-width: 530px; color: var(--muted); font-size: clamp(1rem, 1.45vw, 1.22rem); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+    .hero-note { display: flex; align-items: center; gap: 13px; margin-top: 40px; color: var(--muted); font-size: .83rem; }
+    .avatar-stack { display: flex; padding-left: 4px; }
+    .avatar {
+      display: grid; place-items: center; width: 30px; height: 30px; margin-left: -4px;
+      border: 2px solid var(--bg); border-radius: 50%; background: #c7c9b0; color: #303326; font-size: .65rem; font-weight: 800;
+    }
+    .avatar:nth-child(2) { background: #e4bd9d; }
+    .avatar:nth-child(3) { background: #b7c8b7; }
+    .avatar:nth-child(4) { background: #d4c3dc; }
+    .hero-visual {
+      position: relative; min-height: 590px; height: min(47vw, 720px); max-height: 760px;
+      overflow: hidden; isolation: isolate; border-radius: 28px; background: #25291f;
+    }
+    .hero-visual::before {
+      position: absolute; content: ""; width: 72%; aspect-ratio: 1; left: 10%; top: 9%;
+      border-radius: 50%; background: #d7f86b; filter: blur(1px); z-index: -1;
+    }
+    .hero-visual::after {
+      position: absolute; content: ""; width: 76%; aspect-ratio: 1; right: -34%; bottom: -14%;
+      border-radius: 50%; background: #9dbaa0; mix-blend-mode: screen; opacity: .8; z-index: -1;
+    }
+    .visual-grid { position: absolute; inset: 0; opacity: .19; background-image: linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px); background-size: 40px 40px; mask-image: linear-gradient(transparent, black 18%, black 83%, transparent); }
+    .orb { position: absolute; width: 64%; left: 17%; top: 22%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 30% 24%, #f5ffb4 0, #c8ef62 23%, #6c8741 52%, #25291f 72%); box-shadow: inset -28px -30px 60px rgba(0,0,0,.48), 0 45px 75px rgba(0,0,0,.28); }
+    .orb::before { content: ""; position: absolute; inset: 8%; border: 1px solid rgba(255,255,255,.4); border-radius: 50%; transform: rotate(-28deg) scaleY(.36); }
+    .orb::after { content: ""; position: absolute; inset: 17% -9%; border: 1px solid rgba(255,255,255,.4); border-radius: 50%; transform: rotate(32deg) scaleY(.43); }
+    .visual-label { position: absolute; left: 25px; top: 25px; color: #eef4d9; font-size: .72rem; text-transform: uppercase; letter-spacing: .14em; }
+    .visual-index { position: absolute; right: 26px; top: 24px; color: #eef4d9; font-size: .78rem; }
+    .visual-card { position: absolute; right: 24px; bottom: 24px; width: min(250px, 65%); padding: 20px; border: 1px solid rgba(255,255,255,.2); border-radius: 18px; color: white; background: rgba(20,22,17,.66); backdrop-filter: blur(18px); }
+    .visual-card small { display: block; margin-bottom: 10px; color: #d5fa66; text-transform: uppercase; font-size: .66rem; letter-spacing: .12em; }
+    .visual-card strong { display: block; font-size: 1.25rem; letter-spacing: -.04em; line-height: 1.15; }
+    .visual-card span { display: block; margin-top: 9px; color: #c4c8b9; font-size: .78rem; }
+    .scroll-cue { position: absolute; left: 26px; bottom: 30px; display: flex; align-items: center; gap: 8px; color: #eef4d9; font-size: .75rem; }
+
+    /* Proof strip */
+    .trust { padding: 28px 0; border-block: 1px solid var(--line); }
+    .trust-inner { display: flex; align-items: center; justify-content: space-between; gap: 30px; }
+    .trust-label { max-width: 150px; color: var(--muted); font-size: .78rem; line-height: 1.4; }
+    .client-logos { display: flex; justify-content: space-around; align-items: center; gap: clamp(20px, 5vw, 70px); flex: 1; flex-wrap: wrap; }
+    .client-logo { color: #797b71; font-size: clamp(1rem, 1.8vw, 1.45rem); font-weight: 850; letter-spacing: -.06em; }
+    .client-logo:nth-child(2) { font-family: Georgia, serif; font-weight: 500; font-style: italic; }
+    .client-logo:nth-child(3) { letter-spacing: .16em; font-size: .9rem; }
+    .client-logo:nth-child(4) { font-weight: 500; }
+    .client-logo:nth-child(5) { letter-spacing: -.09em; }
+
+    /* Services */
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .service-card { min-height: 300px; display: flex; flex-direction: column; padding: clamp(24px, 3vw, 36px); border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,255,255,.45); transition: transform .25s ease, background .25s ease, box-shadow .25s ease; }
+    .service-card:hover { transform: translateY(-5px); background: white; box-shadow: var(--shadow); }
+    .service-top { display: flex; justify-content: space-between; align-items: start; }
+    .service-icon { display: grid; place-items: center; width: 53px; height: 53px; border-radius: 16px; background: var(--lime); }
+    .service-icon svg { width: 25px; height: 25px; }
+    .service-number { color: #94968b; font-size: .8rem; font-weight: 700; }
+    .service-card h3 { margin: 34px 0 12px; font-size: 1.5rem; letter-spacing: -.045em; }
+    .service-card p { margin: 0; color: var(--muted); font-size: .94rem; }
+    .service-link { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 28px; font-weight: 750; font-size: .86rem; }
+    .service-link svg { width: 16px; }
+
+    /* Work */
+    .work-section { background: var(--dark); color: #f5f5ee; }
+    .work-section .eyebrow, .work-section .section-heading p { color: #a9ad9d; }
+    .work-section .section-heading h2 { color: #f5f5ee; }
+    .work-grid { display: grid; grid-template-columns: 1.12fr .88fr; gap: 26px; align-items: start; }
+    .project-card { min-width: 0; }
+    .project-card:nth-child(2) { margin-top: 100px; }
+    .project-art { position: relative; overflow: hidden; aspect-ratio: 1.22 / 1; border-radius: 20px; }
+    .project-card:nth-child(2) .project-art { aspect-ratio: .96 / 1; }
+    .art-commerce { background: #d2edaa; color: #203321; }
+    .art-commerce .art-topline { position: absolute; top: 24px; left: 26px; right: 26px; display: flex; justify-content: space-between; align-items: center; font-size: .7rem; font-weight: 800; letter-spacing: .1em; }
+    .art-commerce .art-title { position: absolute; top: 27%; left: 8%; z-index: 2; font-size: clamp(2.3rem, 5vw, 5.6rem); line-height: .84; font-weight: 900; letter-spacing: -.09em; }
+    .art-commerce .art-title span { display: block; font-family: Georgia, serif; font-weight: 400; font-style: italic; }
+    .art-fruit { position: absolute; width: 37%; aspect-ratio: 1; right: 12%; bottom: 13%; border-radius: 48% 52% 61% 39%; background: radial-gradient(circle at 30% 25%, #ffdf92, #e7863b 48%, #9b4227 80%); transform: rotate(-17deg); box-shadow: inset -20px -20px 30px #743d2c55, 0 20px 35px #54704444; }
+    .art-fruit::before { content: ""; position: absolute; width: 25%; height: 12%; border-radius: 100% 0 100% 0; background: #426a42; top: -3%; left: 48%; transform: rotate(-38deg); }
+    .art-fruit::after { content: ""; position: absolute; inset: 11%; border: 1px solid #ffe5a177; border-radius: inherit; }
+    .art-orbit { position: absolute; width: 72%; aspect-ratio: 1; right: -5%; bottom: -29%; border: 1px solid #426a425a; border-radius: 50%; }
+    .art-finance { background: #d6cbff; color: #30245f; }
+    .art-finance .finance-brand { position: absolute; top: 24px; left: 25px; font-weight: 900; letter-spacing: -.07em; }
+    .art-finance .finance-heading { position: absolute; left: 8%; top: 17%; max-width: 82%; font-size: clamp(2.2rem, 4vw, 4.4rem); line-height: .9; letter-spacing: -.08em; font-weight: 750; }
+    .chart-card { position: absolute; left: 8%; right: 8%; bottom: 8%; padding: 17px; border: 1px solid rgba(255,255,255,.8); border-radius: 17px; background: rgba(255,255,255,.58); backdrop-filter: blur(12px); }
+    .chart-label { display: flex; justify-content: space-between; gap: 12px; font-size: .72rem; font-weight: 700; }
+    .chart-number { margin-top: 6px; font-size: clamp(1.6rem, 3.4vw, 3rem); letter-spacing: -.07em; font-weight: 800; }
+    .mini-bars { display: flex; height: 62px; align-items: end; gap: 6px; margin-top: 12px; }
+    .mini-bars i { flex: 1; display: block; border-radius: 5px 5px 0 0; background: #7d69d4; }
+    .mini-bars i:nth-child(1) { height: 30%; } .mini-bars i:nth-child(2) { height: 45%; } .mini-bars i:nth-child(3) { height: 38%; } .mini-bars i:nth-child(4) { height: 60%; } .mini-bars i:nth-child(5) { height: 54%; } .mini-bars i:nth-child(6) { height: 74%; } .mini-bars i:nth-child(7) { height: 66%; } .mini-bars i:nth-child(8) { height: 92%; } .mini-bars i:nth-child(9) { height: 100%; }
+    .project-meta { display: flex; align-items: start; justify-content: space-between; gap: 20px; padding-top: 22px; }
+    .project-meta h3 { margin: 0 0 7px; font-size: 1.45rem; letter-spacing: -.04em; }
+    .project-meta p { margin: 0; color: #a9ad9d; font-size: .9rem; }
+    .project-arrow { flex: 0 0 43px; display: grid; place-items: center; width: 43px; height: 43px; border: 1px solid #494c41; border-radius: 50%; }
+    .project-arrow svg { width: 18px; }
+    .work-foot { display: flex; justify-content: center; margin-top: 60px; }
+    .work-foot .button-outline { color: white; border-color: #494c41; }
+    .work-foot .button-outline:hover { color: var(--dark); }
+
+    /* Approach */
+    .approach-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(50px, 9vw, 150px); }
+    .approach-intro { position: sticky; top: 130px; align-self: start; }
+    .approach-intro h2 { margin: 18px 0; font-size: clamp(2.8rem, 5.5vw, 5.5rem); line-height: .92; letter-spacing: -.075em; }
+    .approach-intro p { max-width: 390px; color: var(--muted); }
+    .steps { border-top: 1px solid var(--line); }
+    .step { display: grid; grid-template-columns: 52px 1fr; gap: 24px; padding: 30px 0 34px; border-bottom: 1px solid var(--line); }
+    .step-num { display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid var(--line); border-radius: 50%; color: var(--muted); font-size: .8rem; font-weight: 700; }
+    .step h3 { margin: 5px 0 9px; font-size: 1.4rem; letter-spacing: -.04em; }
+    .step p { max-width: 480px; margin: 0; color: var(--muted); }
+
+    /* Stats banner */
+    .stats-wrap { padding: 0 0 clamp(78px, 10vw, 150px); }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); padding: clamp(28px, 5vw, 65px); border-radius: 24px; background: var(--lime); gap: 28px; }
+    .stat { padding-left: 22px; border-left: 1px solid #8ea73d77; }
+    .stat:first-child { padding-left: 0; border-left: 0; }
+    .stat strong { display: block; font-size: clamp(2.4rem, 5vw, 5rem); line-height: 1; letter-spacing: -.08em; font-weight: 700; }
+    .stat span { display: block; margin-top: 12px; color: #444d2d; font-size: .85rem; }
+
+    /* Testimonial */
+    .quote-section { padding-top: 0; }
+    .quote-card { display: grid; grid-template-columns: .7fr 1.3fr; gap: clamp(30px, 7vw, 110px); padding: clamp(30px, 6vw, 80px); border-radius: 24px; background: #e8e9df; }
+    .quote-side { display: flex; flex-direction: column; justify-content: space-between; gap: 35px; }
+    .quote-mark { width: 54px; height: 54px; display: grid; place-items: center; border-radius: 17px; background: var(--lime); font-family: Georgia, serif; font-size: 2.5rem; line-height: 1; }
+    .quote-company { color: var(--muted); font-size: .85rem; }
+    blockquote { margin: 0; font-size: clamp(1.7rem, 3.3vw, 3.15rem); font-weight: 550; line-height: 1.18; letter-spacing: -.055em; }
+    .quote-author { display: flex; align-items: center; gap: 13px; margin-top: 30px; }
+    .author-avatar { display: grid; place-items: center; width: 45px; height: 45px; border-radius: 50%; background: #c6ccb4; color: #3a4431; font-weight: 800; }
+    .quote-author strong { display: block; font-size: .88rem; }
+    .quote-author span { display: block; color: var(--muted); font-size: .79rem; }
+
+    /* Contact and footer */
+    .contact-section { padding-bottom: 75px; }
+    .contact-shell { display: grid; grid-template-columns: .95fr 1.05fr; gap: clamp(35px, 7vw, 100px); padding: clamp(28px, 6vw, 80px); border-radius: 26px; background: var(--dark); color: #f5f5ee; }
+    .contact-copy .eyebrow { color: #a9ad9d; }
+    .contact-copy h2 { margin: 19px 0 22px; font-size: clamp(2.8rem, 5.5vw, 5.5rem); line-height: .91; letter-spacing: -.075em; }
+    .contact-copy > p { max-width: 410px; color: #a9ad9d; }
+    .contact-detail { margin-top: 38px; }
+    .contact-detail span { display: block; color: #a9ad9d; font-size: .78rem; margin-bottom: 6px; }
+    .contact-detail a { font-size: 1.07rem; }
+    .contact-form { display: grid; grid-template-columns: 1fr 1fr; align-content: center; gap: 18px; }
+    .field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { color: #d6d8ce; font-size: .81rem; font-weight: 650; }
+    .field input, .field textarea, .field select { width: 100%; min-width: 0; padding: 14px 15px; border: 1px solid #45483e; border-radius: 11px; outline: 0; color: #f5f5ee; background: #1b1d18; transition: border-color .2s, box-shadow .2s; }
+    .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--lime); box-shadow: 0 0 0 3px #d5fa6622; }
+    .field input::placeholder, .field textarea::placeholder { color: #818579; }
+    .field textarea { min-height: 120px; resize: vertical; }
+    .field select { appearance: auto; }
+    .contact-form .button { justify-self: start; }
+    .form-message { grid-column: 1 / -1; min-height: 1.4em; margin: 0; color: var(--lime); font-size: .86rem; }
+    .footer { padding: 30px 0 35px; border-top: 1px solid var(--line); }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+    .footer p { margin: 0; color: var(--muted); font-size: .8rem; }
+    .footer-links { display: flex; gap: 23px; color: var(--muted); font-size: .8rem; }
+    .footer-links a:hover { color: var(--ink); }
+    .back-top { position: fixed; right: 22px; bottom: 22px; z-index: 80; display: grid; place-items: center; width: 46px; height: 46px; border: 1px solid var(--line); border-radius: 50%; background: var(--paper); box-shadow: 0 6px 24px #11120f12; opacity: 0; pointer-events: none; transform: translateY(8px); transition: opacity .2s, transform .2s; }
+    .back-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .back-top svg { width: 19px; }
+
+    /* Motion and accessibility */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    :focus-visible { outline: 3px solid #8a9c4d; outline-offset: 4px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    /* Responsive layouts: mobile, tablet, ultrawide and 4K */
+    @media (min-width: 2200px) {
+      :root { --content: 1800px; --gutter: clamp(88px, 6vw, 150px); }
+      body { font-size: 18px; }
+      .hero-visual { min-height: 760px; }
+      .nav { min-height: 96px; }
+    }
+    @media (max-width: 1050px) {
+      .hero-grid { grid-template-columns: 1fr .9fr; gap: 30px; }
+      .hero h1 { font-size: clamp(3.5rem, 8.4vw, 6.8rem); }
+      .hero-visual { min-height: 490px; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .service-card:last-child { grid-column: 1 / -1; min-height: 250px; }
+      .approach-grid { gap: 55px; }
+      .contact-shell { gap: 38px; }
+    }
+    @media (max-width: 760px) {
+      :root { --gutter: 22px; }
+      .nav { min-height: 72px; }
+      .menu-toggle { display: block; }
+      .nav-links {
+        position: fixed; inset: 72px 0 auto; display: flex; flex-direction: column; align-items: stretch; gap: 0;
+        padding: 12px var(--gutter) 24px; background: var(--bg); border-bottom: 1px solid var(--line);
+        visibility: hidden; opacity: 0; transform: translateY(-8px); transition: opacity .2s ease, transform .2s ease, visibility .2s;
+      }
+      .nav-links.open { visibility: visible; opacity: 1; transform: translateY(0); }
+      .nav-links a:not(.button) { padding: 17px 0; border-bottom: 1px solid var(--line); font-size: 1rem; }
+      .nav-links .button { margin-top: 18px; }
+      .hero { padding-top: 48px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero h1 { max-width: 650px; font-size: clamp(3.65rem, 14vw, 6.5rem); }
+      .hero-copy { max-width: 600px; }
+      .hero-visual { min-height: 430px; height: 110vw; max-height: 620px; margin-top: 15px; }
+      .orb { width: 62%; left: 17%; top: 19%; }
+      .trust-inner { align-items: start; flex-direction: column; }
+      .trust-label { max-width: 260px; }
+      .client-logos { justify-content: start; gap: 20px 30px; }
+      .section-heading { align-items: start; flex-direction: column; gap: 18px; margin-bottom: 34px; }
+      .section-heading p { max-width: 540px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .service-card, .service-card:last-child { grid-column: auto; min-height: 260px; }
+      .work-grid { grid-template-columns: 1fr; gap: 38px; }
+      .project-card:nth-child(2) { margin-top: 0; }
+      .project-card:nth-child(2) .project-art { aspect-ratio: 1.22 / 1; }
+      .art-commerce .art-title { font-size: clamp(3rem, 14vw, 5.4rem); }
+      .art-finance .finance-heading { font-size: clamp(2.7rem, 11vw, 4.3rem); }
+      .approach-grid { grid-template-columns: 1fr; gap: 36px; }
+      .approach-intro { position: static; }
+      .stats { grid-template-columns: repeat(2, 1fr); gap: 32px 20px; }
+      .stat:nth-child(3) { padding-left: 0; border-left: 0; }
+      .quote-card { grid-template-columns: 1fr; gap: 32px; }
+      .quote-side { flex-direction: row; align-items: center; }
+      .contact-shell { grid-template-columns: 1fr; }
+      .contact-copy h2 { max-width: 540px; }
+      .footer-inner { align-items: start; flex-direction: column; }
+    }
+    @media (max-width: 430px) {
+      :root { --gutter: 17px; }
+      .brand { font-size: 1.05rem; }
+      .hero h1 { font-size: clamp(3.15rem, 14.5vw, 4.2rem); }
+      .hero-actions { align-items: stretch; flex-direction: column; }
+      .hero-actions .button { width: 100%; }
+      .hero-visual { min-height: 390px; }
+      .visual-card { right: 14px; bottom: 14px; padding: 15px; }
+      .scroll-cue { left: 15px; bottom: 22px; }
+      .service-card { padding: 25px; }
+      .step { grid-template-columns: 42px 1fr; gap: 15px; }
+      .stats { padding: 25px 20px; gap: 27px 12px; }
+      .stat strong { font-size: 2.45rem; }
+      .contact-form { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      .contact-form .button { width: 100%; }
+      .footer-links { gap: 14px; flex-wrap: wrap; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container" aria-label="Huvudmeny">
+      <a class="brand" href="#hem" aria-label="NORD Studio, startsida">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 18V6l14 12V6" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        NORD<span>STUDIO</span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Öppna meny" aria-expanded="false" aria-controls="navLinks">
+        <svg id="menuIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 17h16"/></svg>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="#tjanster">Vad vi gör</a>
+        <a href="#projekt">Projekt</a>
+        <a href="#process">Vårt arbetssätt</a>
+        <a href="#omdome">Kunderna säger</a>
+        <a class="button" href="#kontakt">Berätta om ditt projekt <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="hem">
+    <section class="hero">
+      <div class="hero-grid container">
+        <div class="hero-content reveal">
+          <span class="eyebrow">Digital studio · Stockholm / hela Sverige</span>
+          <h1>Vi gör idéer till <em>framsteg.</em></h1>
+          <p class="hero-copy">Vi kombinerar strategi, kreativ design och smart teknik för att skapa digitala upplevelser som människor älskar och företag växer med.</p>
+          <div class="hero-actions">
+            <a class="button" href="#projekt">Upptäck våra projekt <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+            <a class="button button-outline" href="#kontakt">Låt oss prata</a>
+          </div>
+          <div class="hero-note">
+            <div class="avatar-stack" aria-hidden="true"><span class="avatar">AL</span><span class="avatar">JM</span><span class="avatar">SK</span><span class="avatar">+</span></div>
+            <span>Ett litet team. Stora ambitioner. Riktiga resultat.</span>
+          </div>
+        </div>
+        <div class="hero-visual reveal" role="img" aria-label="Abstrakt grön 3D-form mot mörk bakgrund">
+          <div class="visual-grid"></div><div class="orb"></div>
+          <span class="visual-label">Design with purpose</span><span class="visual-index">N° 001 — 2026</span>
+          <div class="scroll-cue"><span>↓</span> Scrolla och upptäck</div>
+          <div class="visual-card"><small>Vår filosofi</small><strong>Färre saker.<br>Gjorda bättre.</strong><span>Strategi möter känsla.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust" aria-label="Exempel på samarbeten">
+      <div class="trust-inner container">
+        <p class="trust-label">Vi har fått förtroendet att bygga tillsammans med</p>
+        <div class="client-logos" aria-label="Exempel på företagsnamn"><span class="client-logo">north/one</span><span class="client-logo">forma.</span><span class="client-logo">V E R D E</span><span class="client-logo">morrow</span><span class="client-logo">goodkind®</span></div>
+      </div>
+    </section>
+
+    <section class="section container" id="tjanster">
+      <div class="section-heading reveal">
+        <div><span class="eyebrow">Det vi är bra på</span><h2>Allt börjar med en <span class="accent">bra idé.</span></h2></div>
+        <p>Från första tanke till lansering och vidare. Vi samlar rätt kompetens för att göra varje del av din digitala resa bättre.</p>
+      </div>
+      <div class="services-grid">
+        <article class="service-card reveal">
+          <div class="service-top"><span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4M8 11h6M11 8v6"/></svg></span><span class="service-number">01 / STRATEGI</span></div>
+          <h3>Rätt riktning</h3><p>Insikter, positionering och tydliga mål som hjälper ditt företag att prioritera rätt och sticka ut på riktigt.</p>
+          <a class="service-link" href="#kontakt">Utforska möjligheterna <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+        </article>
+        <article class="service-card reveal">
+          <div class="service-top"><span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.6 5.4L20 11l-5.4 2.6L12 19l-2.6-5.4L4 11l5.4-2.6L12 3Z"/><path d="m19 16 .9 1.9L22 19l-2.1 1.1L19 22l-1.1-1.9L16 19l1.9-1.1L19 16Z"/></svg></span><span class="service-number">02 / DESIGN</span></div>
+          <h3>Form med funktion</h3><p>Varumärken och användarupplevelser som känns självklara, ser fantastiska ut och gör det enkelt att välja dig.</p>
+          <a class="service-link" href="#kontakt">Se vad vi kan skapa <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+        </article>
+        <article class="service-card reveal">
+          <div class="service-top"><span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m9 9-3 3 3 3m6-6 3 3-3 3m-2-7-2 8"/></svg></span><span class="service-number">03 / UTVECKLING</span></div>
+          <h3>Teknik som håller</h3><p>Snabba webbplatser, genomtänkta digitala produkter och smarta lösningar som fungerar i verkligheten.</p>
+          <a class="service-link" href="#kontakt">Bygg något smartare <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section work-section" id="projekt">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div><span class="eyebrow">Utvalt arbete</span><h2>Inte bara snyggt.<br><span style="color:var(--lime)">Gjort för att fungera.</span></h2></div>
+          <p>Varje projekt börjar med en utmaning. Här är exempel på hur genomtänkt design och teknik kan göra skillnad.</p>
+        </div>
+        <div class="work-grid">
+          <article class="project-card reveal">
+            <div class="project-art art-commerce" role="img" aria-label="Konceptdesign för varumärket Frukta">
+              <div class="art-topline"><span>FRUKTA®</span><span>GROWN WITH CARE ↗</span></div>
+              <div class="art-title">Less<br>but <span>better.</span></div><div class="art-fruit"></div><div class="art-orbit"></div>
+            </div>
+            <div class="project-meta"><div><h3>Frukta — en ny smak av e-handel</h3><p>Varumärke · Digital strategi · E-handel</p></div><span class="project-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></div>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-art art-finance" role="img" aria-label="Konceptdesign för den digitala ekonomitjänsten Morrow">
+              <div class="finance-brand">morrow.</div><div class="finance-heading">Money, meet <span style="font-family:Georgia,serif;font-style:italic;font-weight:400">clarity.</span></div>
+              <div class="chart-card"><div class="chart-label"><span>DIN UTVECKLING</span><span>+18,6% ↗</span></div><div class="chart-number">128 450 kr</div><div class="mini-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+            </div>
+            <div class="project-meta"><div><h3>Morrow — ekonomi utan brus</h3><p>Produktdesign · UX/UI · Prototyp</p></div><span class="project-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></div>
+          </article>
+        </div>
+        <div class="work-foot"><a class="button button-outline" href="#kontakt">Har du ett projekt i tankarna? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div>
+      </div>
+    </section>
+
+    <section class="section container" id="process">
+      <div class="approach-grid">
+        <div class="approach-intro reveal"><span class="eyebrow">En tydlig process</span><h2>Bra arbete.<br><span class="accent">Utan krångel.</span></h2><p>Du får en nära partner, en tydlig plan och transparens längs vägen. Inga mystiska processer. Inga överraskningar.</p><a class="button" href="#kontakt">Så börjar vi <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div>
+        <div class="steps">
+          <article class="step reveal"><span class="step-num">01</span><div><h3>Vi lyssnar först</h3><p>Vi lär känna din verksamhet, dina kunder och vad framgång faktiskt betyder för dig.</p></div></article>
+          <article class="step reveal"><span class="step-num">02</span><div><h3>Vi sätter riktningen</h3><p>Tillsammans prioriterar vi, testar idéer och lägger en plan som bygger på tydliga mål.</p></div></article>
+          <article class="step reveal"><span class="step-num">03</span><div><h3>Vi skapar tillsammans</h3><p>Du är med i processen medan vi förvandlar strategi till design, innehåll och teknik.</p></div></article>
+          <article class="step reveal"><span class="step-num">04</span><div><h3>Vi lanserar och lär oss</h3><p>Vi följer upp, tar in feedback och förbättrar upplevelsen så att den fortsätter leverera.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats-wrap container" aria-label="NORD Studio i siffror">
+      <div class="stats reveal">
+        <div class="stat"><strong data-count="32" data-suffix="+">32+</strong><span>projekt med en tydlig riktning</span></div>
+        <div class="stat"><strong data-count="94" data-suffix="%">94%</strong><span>kunder via rekommendation</span></div>
+        <div class="stat"><strong data-count="8" data-suffix=" år">8 år</strong><span>av nyfikenhet och utveckling</span></div>
+        <div class="stat"><strong data-count="4.9" data-suffix="/5">4.9/5</strong><span>genomsnittligt kundbetyg</span></div>
+      </div>
+    </section>
+
+    <section class="section quote-section container" id="omdome">
+      <div class="quote-card reveal">
+        <div class="quote-side"><div class="quote-mark" aria-hidden="true">“</div><span class="quote-company">Samarbete med north/one</span></div>
+        <div><blockquote>”NORD förstod inte bara vad vi ville bygga, utan hjälpte oss att inse vad vi faktiskt behövde. Resultatet blev bättre än vi hade föreställt oss.”</blockquote><div class="quote-author"><div class="author-avatar" aria-hidden="true">EL</div><div><strong>Emma Lind</strong><span>Marknadschef · north/one</span></div></div></div>
+      </div>
+    </section>
+
+    <section class="contact-section container" id="kontakt">
+      <div class="contact-shell reveal">
+        <div class="contact-copy"><span class="eyebrow">Nästa steg börjar här</span><h2>Har du något bra på gång?</h2><p>Berätta lite om vad du vill åstadkomma. Vi tar en första pratstund, delar några tankar och ser om vi passar ihop.</p><div class="contact-detail"><span>Du kan också mejla oss direkt</span><a href="mailto:hej@nordstudio.se">hej@nordstudio.se ↗</a></div></div>
+        <form class="contact-form" id="contactForm">
+          <div class="field"><label for="name">Ditt namn</label><input id="name" name="name" type="text" placeholder="För- och efternamn" autocomplete="name" required></div>
+          <div class="field"><label for="email">E-postadress</label><input id="email" name="email" type="email" placeholder="du@foretag.se" autocomplete="email" required></div>
+          <div class="field full"><label for="service">Vad behöver du hjälp med?</label><select id="service" name="service" required><option value="" disabled selected>Välj ett område</option><option>Strategi och varumärke</option><option>Webbdesign och UX/UI</option><option>Webbutveckling</option><option>En kombination av flera saker</option><option>Jag vill bolla en idé</option></select></div>
+          <div class="field full"><label for="message">Berätta lite om projektet</label><textarea id="message" name="message" placeholder="Vad drömmer du om att skapa?" required></textarea></div>
+          <button class="button button-light" type="submit">Skicka projektförfrågan <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+          <p class="form-message" id="formMessage" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="footer-inner container"><a class="brand" href="#hem"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 18V6l14 12V6" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>NORD<span>STUDIO</span></a><p>© <span id="year"></span> NORD Studio. Gjort med omtanke i Sverige.</p><div class="footer-links"><a href="#hem">Till toppen ↑</a><a href="mailto:hej@nordstudio.se">Kontakt</a><a href="#kontakt">Integritet</a></div></div></footer>
+  <button class="back-top" id="backTop" aria-label="Tillbaka till toppen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5m-7 7 7-7 7 7"/></svg></button>
+
+  <script>
+    // Mobilmeny med stöd för tangentbord och skärmläsare.
+    const menuToggle = document.querySelector('#menuToggle');
+    const navLinks = document.querySelector('#navLinks');
+    const menuIcon = document.querySelector('#menuIcon');
+
+    function setMenu(open) {
+      navLinks.classList.toggle('open', open);
+      document.body.classList.toggle('menu-open', open);
+      menuToggle.setAttribute('aria-expanded', String(open));
+      menuToggle.setAttribute('aria-label', open ? 'Stäng meny' : 'Öppna meny');
+      menuIcon.innerHTML = open
+        ? '<path d="m6 6 12 12M18 6 6 18" />'
+        : '<path d="M4 7h16M4 17h16" />';
+    }
+
+    menuToggle.addEventListener('click', () => {
+      setMenu(menuToggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => setMenu(false));
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') setMenu(false);
+    });
+
+    // Visa sektioner mjukt när de scrollas in i vyn.
+    const revealElements = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      revealElements.forEach(element => revealObserver.observe(element));
+    } else {
+      revealElements.forEach(element => element.classList.add('is-visible'));
+    }
+
+    // Räknare som animeras när statistikdelen blir synlig.
+    const stats = document.querySelector('.stats');
+    let countersStarted = false;
+    function animateCounters() {
+      if (countersStarted) return;
+      countersStarted = true;
+      document.querySelectorAll('[data-count]').forEach(counter => {
+        const target = Number(counter.dataset.count);
+        const suffix = counter.dataset.suffix || '';
+        const decimals = String(target).includes('.') ? 1 : 0;
+        const start = performance.now();
+        const duration = 1300;
+        function update(now) {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 4);
+          counter.textContent = (target * eased).toFixed(decimals) + suffix;
+          if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+      });
+    }
+    if ('IntersectionObserver' in window && stats) {
+      const statsObserver = new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.isIntersecting)) {
+          animateCounters();
+          statsObserver.disconnect();
+        }
+      }, { threshold: 0.25 });
+      statsObserver.observe(stats);
+    } else {
+      animateCounters();
+    }
+
+    // Tillbaka-till-toppen-knapp.
+    const backTop = document.querySelector('#backTop');
+    window.addEventListener('scroll', () => {
+      backTop.classList.toggle('visible', window.scrollY > 600);
+    }, { passive: true });
+    backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Kontaktformuläret demonstrerar validering och återkoppling i webbläsaren.
+    // För att faktiskt skicka mejl behöver formuläret kopplas till en server eller formulärtjänst.
+    const contactForm = document.querySelector('#contactForm');
+    const formMessage = document.querySelector('#formMessage');
+    contactForm.addEventListener('submit', event => {
+      event.preventDefault();
+      if (!contactForm.reportValidity()) return;
+      const formData = new FormData(contactForm);
+      const firstName = String(formData.get('name')).trim().split(/\s+/)[0];
+      formMessage.textContent = `Tack ${firstName}! Formuläret fungerar, men förfrågan är inte skickad ännu. Koppla formuläret till en e-posttjänst för att ta emot meddelanden.`;
+      contactForm.reset();
+    });
+
+    // Uppdatera copyright automatiskt varje år.
+    document.querySelector('#year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

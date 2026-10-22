@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LuminaTech – Vi bygger framtidens digitala upplevelser med AI, design och teknik i världsklass.">
+  <meta name="theme-color" content="#0a0a0f">
+  <title>LuminaTech | Digital Innovation & AI</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========================================
+       CSS VARIABLES & RESET
+    ======================================== */
+    :root {
+      --bg: #07070c;
+      --bg-elevated: #0e0e16;
+      --surface: #14141f;
+      --surface-hover: #1c1c2a;
+      --border: rgba(255, 255, 255, 0.07);
+      --border-strong: rgba(255, 255, 255, 0.12);
+
+      --primary: #7c6cff;
+      --primary-hover: #9588ff;
+      --accent: #22d3ee;
+      --accent-soft: rgba(34, 211, 238, 0.15);
+
+      --text: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+
+      --success: #34d399;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --radius-full: 9999px;
+
+      --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.25);
+      --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      --shadow-glow: 0 0 40px rgba(124, 108, 255, 0.25);
+
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-display: 'Outfit', system-ui, sans-serif;
+
+      --nav-height: 72px;
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img, svg {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    /* ========================================
+       UTILITY
+    ======================================== */
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .container { padding: 0 2rem; }
+    }
+
+    @media (min-width: 2560px) {
+      .container { max-width: 1600px; }
+      html { font-size: 18px; }
+    }
+
+    @media (min-width: 3840px) {
+      .container { max-width: 2000px; }
+      html { font-size: 20px; }
+    }
+
+    .section {
+      padding: 5rem 0;
+    }
+
+    @media (min-width: 768px) {
+      .section { padding: 7rem 0; }
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 3.5rem;
+    }
+
+    .section-header .eyebrow {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-header h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.85rem, 4vw, 2.75rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-header p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+
+    /* Fade-in animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ========================================
+       NAVIGATION
+    ======================================== */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      z-index: 1000;
+      background: rgba(7, 7, 12, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid transparent;
+      transition: border-color var(--transition), background var(--transition);
+    }
+
+    .nav.scrolled {
+      border-bottom-color: var(--border);
+      background: rgba(7, 7, 12, 0.9);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+    }
+
+    .logo-icon svg {
+      width: 18px;
+      height: 18px;
+      fill: white;
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    @media (min-width: 900px) {
+      .nav-links { display: flex; }
+    }
+
+    .nav-links a {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: color var(--transition);
+      position: relative;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width var(--transition);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      display: none;
+    }
+
+    @media (min-width: 900px) {
+      .nav-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--primary);
+        color: white;
+        font-weight: 600;
+        font-size: 0.9rem;
+        padding: 0.65rem 1.25rem;
+        border-radius: var(--radius-full);
+        transition: background var(--transition), transform var(--transition);
+      }
+      .nav-cta:hover {
+        background: var(--primary-hover);
+        transform: translateY(-1px);
+      }
+    }
+
+    /* Mobile menu button */
+    .menu-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 8px;
+      z-index: 1001;
+    }
+
+    @media (min-width: 900px) {
+      .menu-btn { display: none; }
+    }
+
+    .menu-btn span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .menu-btn.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .menu-btn.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-btn.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* Mobile drawer */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .mobile-menu.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-menu a {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      transition: color var(--transition);
+    }
+
+    .mobile-menu a:hover {
+      color: var(--text);
+    }
+
+    /* ========================================
+       HERO
+    ======================================== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: var(--nav-height);
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(124, 108, 255, 0.18), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 60%, rgba(34, 211, 238, 0.08), transparent);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black, transparent);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent-soft);
+      border: 1px solid rgba(34, 211, 238, 0.25);
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.4rem 0.9rem;
+      border-radius: var(--radius-full);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-badge span {
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 .gradient {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      color: var(--text-secondary);
+      max-width: 540px;
+      margin-bottom: 2.25rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.9rem 1.75rem;
+      border-radius: var(--radius-full);
+      transition: all var(--transition);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 0 50px rgba(124, 108, 255, 0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border-strong);
+    }
+
+    .btn-secondary:hover {
+      background: var(--surface);
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      margin-top: 4rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-item h3 {
+      font-family: var(--font-display);
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .stat-item p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* ========================================
+       SERVICES
+    ======================================== */
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 640px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .service-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem 1.75rem;
+      transition: all var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .service-card:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-strong);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(124, 108, 255, 0.12);
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 1.25rem;
+      color: var(--primary);
+    }
+
+    .service-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .service-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+
+    .service-card p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    /* ========================================
+       ABOUT
+    ======================================== */
+    .about-grid {
+      display: grid;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    @media (min-width: 900px) {
+      .about-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 5rem;
+      }
+    }
+
+    .about-visual {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      aspect-ratio: 4/3;
+      display: grid;
+      place-items: center;
+    }
+
+    .about-visual-inner {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .about-visual-inner .big-number {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    .about-content h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.85rem, 3.5vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      line-height: 1.2;
+    }
+
+    .about-content p {
+      color: var(--text-secondary);
+      margin-bottom: 1.25rem;
+      font-size: 1.05rem;
+    }
+
+    .about-list {
+      margin-top: 1.5rem;
+    }
+
+    .about-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .about-list li svg {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      color: var(--success);
+      margin-top: 2px;
+    }
+
+    /* ========================================
+       PROJECTS
+    ======================================== */
+    .projects-grid {
+      display: grid;
+      gap: 1.75rem;
+    }
+
+    @media (min-width: 768px) {
+      .projects-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all var(--transition);
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--border-strong);
+    }
+
+    .project-image {
+      aspect-ratio: 16/10;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-image .placeholder {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.15);
+    }
+
+    .project-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, var(--surface), transparent 50%);
+    }
+
+    .project-body {
+      padding: 1.5rem;
+    }
+
+    .project-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-soft);
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+      margin-bottom: 0.75rem;
+    }
+
+    .project-body h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-body p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* ========================================
+       TESTIMONIALS
+    ======================================== */
+    .testimonials-grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .testimonials-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .testimonial-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .testimonial-card .stars {
+      color: #fbbf24;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-card blockquote {
+      flex: 1;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .author-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: white;
+    }
+
+    .author-info strong {
+      display: block;
+      font-size: 0.95rem;
+    }
+
+    .author-info span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* ========================================
+       CTA BAND
+    ======================================== */
+    .cta-band {
+      background: linear-gradient(135deg, rgba(124, 108, 255, 0.15), rgba(34, 211, 238, 0.08));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      padding: 5rem 0;
+    }
+
+    .cta-band h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .cta-band p {
+      color: var(--text-secondary);
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+
+    /* ========================================
+       CONTACT
+    ======================================== */
+    .contact-grid {
+      display: grid;
+      gap: 3rem;
+    }
+
+    @media (min-width: 900px) {
+      .contact-grid {
+        grid-template-columns: 1fr 1.2fr;
+        gap: 4rem;
+      }
+    }
+
+    .contact-info h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .contact-info > p {
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .contact-item .icon {
+      width: 42px;
+      height: 42px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .contact-item .icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .contact-item strong {
+      display: block;
+      font-size: 0.95rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .contact-item span {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* Form */
+    .contact-form {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+    }
+
+    @media (min-width: 640px) {
+      .contact-form { padding: 2.5rem; }
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+      color: var(--text-secondary);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.8rem 1rem;
+      font-family: inherit;
+      font-size: 1rem;
+      color: var(--text);
+      transition: border-color var(--transition), box-shadow var(--transition);
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(124, 108, 255, 0.2);
+    }
+
+    .form-group textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .form-row {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 640px) {
+      .form-row { grid-template-columns: 1fr 1fr; }
+    }
+
+    .form-error {
+      color: #f87171;
+      font-size: 0.85rem;
+      margin-top: 0.35rem;
+      display: none;
+    }
+
+    .form-group.error input,
+    .form-group.error textarea {
+      border-color: #f87171;
+    }
+
+    .form-group.error .form-error {
+      display: block;
+    }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .form-success.visible {
+      display: block;
+    }
+
+    .form-success svg {
+      width: 56px;
+      height: 56px;
+      color: var(--success);
+      margin: 0 auto 1rem;
+    }
+
+    .form-success h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-success p {
+      color: var(--text-secondary);
+    }
+
+    /* ========================================
+       FOOTER
+    ======================================== */
+    .footer {
+      background: var(--bg-elevated);
+      border-top: 1px solid var(--border);
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      gap: 2.5rem;
+      margin-bottom: 3rem;
+    }
+
+    @media (min-width: 640px) {
+      .footer-grid { grid-template-columns: 1.5fr 1fr 1fr; }
+    }
+
+    @media (min-width: 1024px) {
+      .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; }
+    }
+
+    .footer-brand .logo {
+      margin-bottom: 1rem;
+    }
+
+    .footer-brand p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 280px;
+      line-height: 1.6;
+    }
+
+    .footer-col h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-col ul {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .footer-col a {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      transition: color var(--transition);
+    }
+
+    .footer-col a:hover {
+      color: var(--text);
+    }
+
+    .footer-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .socials {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .socials a {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      color: var(--text-secondary);
+      transition: all var(--transition);
+    }
+
+    .socials a:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    .socials a svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* ========================================
+       BACK TO TOP
+    ======================================== */
+    .back-to-top {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      width: 48px;
+      height: 48px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      background: var(--primary-hover);
+      transform: translateY(-3px);
+    }
+
+    .back-to-top svg {
+      width: 20px;
+      height: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== NAVIGATION ========== -->
+  <nav class="nav" id="nav">
+    <div class="container nav-inner">
+      <a href="#hero" class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        LuminaTech
+      </a>
+
+      <div class="nav-links">
+        <a href="#services">Tjänster</a>
+        <a href="#about">Om oss</a>
+        <a href="#projects">Projekt</a>
+        <a href="#testimonials">Kunder</a>
+        <a href="#contact">Kontakt</a>
+      </div>
+
+      <a href="#contact" class="nav-cta">Boka möte</a>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Öppna meny">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#services">Tjänster</a>
+    <a href="#about">Om oss</a>
+    <a href="#projects">Projekt</a>
+    <a href="#testimonials">Kunder</a>
+    <a href="#contact">Kontakt</a>
+  </div>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span></span>
+          Nu tillgängliga för nya projekt
+        </div>
+        <h1>
+          Vi bygger <span class="gradient">framtidens</span><br>
+          digitala upplevelser
+        </h1>
+        <p>
+          LuminaTech hjälper företag att växa med AI, modern design och skalbar teknik. Från idé till lansering – vi levererar resultat som syns.
+        </p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">
+            Starta ett projekt
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#services" class="btn btn-secondary">Se våra tjänster</a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <h3>120+</h3>
+            <p>Levererade projekt</p>
+          </div>
+          <div class="stat-item">
+            <h3>98%</h3>
+            <p>Nöjda kunder</p>
+          </div>
+          <div class="stat-item">
+            <h3>8 år</h3>
+            <p>Erfarenhet</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SERVICES ========== -->
+  <section class="section" id="services">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow">Vad vi gör</span>
+        <h2>Tjänster som tar dig framåt</h2>
+        <p>Vi kombinerar strategi, design och teknik för att skapa lösningar som både ser bra ut och presterar.</p>
+      </div>
+
+      <div class="services-grid">
+        <article class="service-card reveal">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/><path d="M4 14h16v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6z"/><path d="M9 18h6"/></svg>
+          </div>
+          <h3>AI & Automation</h3>
+          <p>Skräddarsydda AI-lösningar som automatiserar processer, förbättrar beslut och ger dig konkurrensfördel.</p>
+        </article>
+
+        <article class="service-card reveal">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          </div>
+          <h3>Webb & Produkter</h3>
+          <p>Moderna, snabba och tillgängliga webbplatser och webbapplikationer byggda med senaste tekniken.</p>
+        </article>
+
+        <article class="service-card reveal">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+          </div>
+          <h3>UX & Design</h3>
+          <p>Användarcentrerad design som skapar tydliga, vackra och konverterande digitala upplevelser.</p>
+        </article>
+
+        <article class="service-card reveal">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/></svg>
+          </div>
+          <h3>Cloud & Skalbarhet</h3>
+          <p>Säkra, skalbara molnarkitekturer som växer med ditt företag – från startup till enterprise.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ABOUT ========== -->
+  <section class="section" id="about" style="background: var(--bg-elevated);">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-visual reveal">
+          <div class="about-visual-inner">
+            <div class="big-number">8+</div>
+            <p style="color: var(--text-secondary); margin-top: 0.5rem;">år av att bygga digitala produkter i världsklass</p>
+          </div>
+        </div>
+
+        <div class="about-content reveal">
+          <h2>Vi är ett team av nördar, designers och strategier</h2>
+          <p>
+            LuminaTech grundades med en enkel idé: teknik ska kännas enkel, vacker och kraftfull. Vi arbetar nära våra kunder för att förstå deras verkliga utmaningar – och levererar lösningar som gör skillnad.
+          </p>
+          <p>
+            Vårt team består av seniora utvecklare, AI-specialister och designers som har arbetat med allt från startups till globala varumärken.
+          </p>
+          <ul class="about-list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Transparent kommunikation och tydliga milstolpar
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Fokus på prestanda, tillgänglighet och hållbarhet
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Långsiktiga partnerskap – inte engångsprojekt
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PROJECTS ========== -->
+  <section class="section" id="projects">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow">Utvalda arbeten</span>
+        <h2>Projekt vi är stolta över</h2>
+        <p>Här är några exempel på lösningar vi har byggt tillsammans med våra kunder.</p>
+      </div>
+
+      <div class="projects-grid">
+        <article class="project-card reveal">
+          <div class="project-image">
+            <div class="placeholder">NordicPay</div>
+          </div>
+          <div class="project-body">
+            <span class="project-tag">Fintech · AI</span>
+            <h3>NordicPay Dashboard</h3>
+            <p>Ett komplett betalnings- och analyssystem med realtids-AI för bedrägeridetektering.</p>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="project-image">
+            <div class="placeholder">GreenFlow</div>
+          </div>
+          <div class="project-body">
+            <span class="project-tag">Sustainability</span>
+            <h3>GreenFlow Platform</h3>
+            <p>Plattform som hjälper företag att mäta, rapportera och minska sitt klimatavtryck.</p>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="project-image">
+            <div class="placeholder">Aura Health</div>
+          </div>
+          <div class="project-body">
+            <span class="project-tag">Healthtech · UX</span>
+            <h3>Aura Patient App</h3>
+            <p>Mobilapp och vårdportal med fokus på enkelhet, tillgänglighet och trygghet.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TESTIMONIALS ========== -->
+  <section class="section" id="testimonials" style="background: var(--bg-elevated);">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow">Vad kunderna säger</span>
+        <h2>Resultaten talar för sig själva</h2>
+        <p>Vi är stolta över de långsiktiga relationer vi byggt med våra kunder.</p>
+      </div>
+
+      <div class="testimonials-grid">
+        <article class="testimonial-card reveal">
+          <div class="stars">★★★★★</div>
+          <blockquote>
+            "LuminaTech tog vår idé från skiss till en skalbar produkt på rekordtid. Deras tekniska kompetens och designkänsla är exceptionell."
+          </blockquote>
+          <div class="testimonial-author">
+            <div class="author-avatar">EK</div>
+            <div class="author-info">
+              <strong>Emma Karlsson</strong>
+              <span>CEO, NordicPay</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="testimonial-card reveal">
+          <div class="stars">★★★★★</div>
+          <blockquote>
+            "Samarbetet känns mer som ett partnerskap än ett konsultuppdrag. De förstår både affären och tekniken på djupet."
+          </blockquote>
+          <div class="testimonial-author">
+            <div class="author-avatar">ML</div>
+            <div class="author-info">
+              <strong>Marcus Lindqvist</strong>
+              <span>CTO, GreenFlow</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="testimonial-card reveal">
+          <div class="stars">★★★★★</div>
+          <blockquote>
+            "Vår nya app har fått fantastisk feedback från både patienter och vårdpersonal. Användarvänligheten är i en klass för sig."
+          </blockquote>
+          <div class="testimonial-author">
+            <div class="author-avatar">SA</div>
+            <div class="author-info">
+              <strong>Sara Andersson</strong>
+              <span>Produktchef, Aura Health</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA BAND ========== -->
+  <section class="cta-band">
+    <div class="container reveal">
+      <h2>Redo att ta nästa steg?</h2>
+      <p>Berätta om ditt projekt så återkommer vi inom 24 timmar med ett förslag.</p>
+      <a href="#contact" class="btn btn-primary">Boka ett kostnadsfritt möte</a>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT ========== -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <h2>Låt oss prata om ditt nästa projekt</h2>
+          <p>Fyll i formuläret eller kontakta oss direkt. Vi svarar alltid inom en arbetsdag.</p>
+
+          <div class="contact-details">
+            <div class="contact-item">
+              <div class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+              </div>
+              <div>
+                <strong>E-post</strong>
+                <span>hej@luminatech.se</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div>
+                <strong>Telefon</strong>
+                <span>+46 70 123 45 67</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div>
+                <strong>Kontor</strong>
+                <span>Sveavägen 48, Stockholm</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form reveal" id="contactFormWrapper">
+          <form id="contactForm" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Namn *</label>
+                <input type="text" id="name" name="name" required placeholder="Ditt namn" autocomplete="name">
+                <div class="form-error">Ange ditt namn</div>
+              </div>
+              <div class="form-group">
+                <label for="email">E-post *</label>
+                <input type="email" id="email" name="email" required placeholder="namn@foretag.se" autocomplete="email">
+                <div class="form-error">Ange en giltig e-postadress</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="company">Företag</label>
+              <input type="text" id="company" name="company" placeholder="Ditt företagsnamn" autocomplete="organization">
+            </div>
+
+            <div class="form-group">
+              <label for="service">Vad är du intresserad av?</label>
+              <select id="service" name="service">
+                <option value="">Välj tjänst...</option>
+                <option value="ai">AI & Automation</option>
+                <option value="web">Webb & Produkter</option>
+                <option value="ux">UX & Design</option>
+                <option value="cloud">Cloud & Skalbarhet</option>
+                <option value="other">Annat / Inte säker</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Meddelande *</label>
+              <textarea id="message" name="message" required placeholder="Berätta kort om ditt projekt eller din fråga..."></textarea>
+              <div class="form-error">Skriv ett meddelande</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+              Skicka meddelande
+            </button>
+          </form>
+
+          <div class="form-success" id="formSuccess">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+            <h3>Tack för ditt meddelande!</h3>
+            <p>Vi återkommer till dig inom 24 timmar.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#hero" class="logo">
+            <div class="logo-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            LuminaTech
+          </a>
+          <p>Vi bygger framtidens digitala upplevelser med AI, design och teknik i världsklass.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Tjänster</h4>
+          <ul>
+            <li><a href="#services">AI & Automation</a></li>
+            <li><a href="#services">Webb & Produkter</a></li>
+            <li><a href="#services">UX & Design</a></li>
+            <li><a href="#services">Cloud & Skalbarhet</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Företag</h4>
+          <ul>
+            <li><a href="#about">Om oss</a></li>
+            <li><a href="#projects">Projekt</a></li>
+            <li><a href="#testimonials">Kunder</a></li>
+            <li><a href="#contact">Kontakt</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Kontakt</h4>
+          <ul>
+            <li><a href="mailto:hej@luminatech.se">hej@luminatech.se</a></li>
+            <li><a href="tel:+46701234567">+46 70 123 45 67</a></li>
+            <li><span style="color: var(--text-muted);">Sveavägen 48, Stockholm</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 LuminaTech AB. Alla rättigheter förbehållna.</p>
+        <div class="socials">
+          <a href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter / X">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="#" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.416 22 12c0-5.523-4.477-10-10-10z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to top -->
+  <button class="back-to-top" id="backToTop" aria-label="Tillbaka till toppen">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
+  <script>
+    // ========================================
+    // MOBILE MENU
+    // ========================================
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+
+    menuBtn.addEventListener('click', () => {
+      menuBtn.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        menuBtn.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // ========================================
+    // NAV SCROLL EFFECT
+    // ========================================
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // ========================================
+    // BACK TO TOP
+    // ========================================
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('visible', window.scrollY > 600);
+    }, { passive: true });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ========================================
+    // INTERSECTION OBSERVER – REVEAL
+    // ========================================
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // ========================================
+    // ACTIVE NAV LINK ON SCROLL
+    // ========================================
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 120;
+        if (window.scrollY >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    }, { passive: true });
+
+    // ========================================
+    // CONTACT FORM VALIDATION
+    // ========================================
+    const form = document.getElementById('contactForm');
+    const formSuccess = document.getElementById('formSuccess');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      let isValid = true;
+      const name = form.name;
+      const email = form.email;
+      const message = form.message;
+
+      // Reset errors
+      [name, email, message].forEach(field => {
+        field.parentElement.classList.remove('error');
+      });
+
+      // Name
+      if (!name.value.trim()) {
+        name.parentElement.classList.add('error');
+        isValid = false;
+      }
+
+      // Email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email.value.trim() || !emailRegex.test(email.value)) {
+        email.parentElement.classList.add('error');
+        isValid = false;
+      }
+
+      // Message
+      if (!message.value.trim()) {
+        message.parentElement.classList.add('error');
+        isValid = false;
+      }
+
+      if (isValid) {
+        // Simulate successful submission
+        form.style.display = 'none';
+        formSuccess.classList.add('visible');
+
+        // Optional: reset after a few seconds for demo purposes
+        // setTimeout(() => {
+        //   form.reset();
+        //   form.style.display = 'block';
+        //   formSuccess.classList.remove('visible');
+        // }, 5000);
+      }
+    });
+
+    // Clear error on input
+    form.querySelectorAll('input, textarea').forEach(field => {
+      field.addEventListener('input', () => {
+        field.parentElement.classList.remove('error');
+      });
+    });
+  </script>
+</body>
+</html>

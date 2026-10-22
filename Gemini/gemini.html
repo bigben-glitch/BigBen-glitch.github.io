@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="sv" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanguard Next Technology & Consulting | Framtidens Digitala Lösningar</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyan: {
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                        },
+                        indigo: {
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                        },
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981',
+                        },
+                        darkbg: '#080c14',
+                        darkcard: '#0f172a',
+                        darkborder: '#1e293b'
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        heading: ['"Space Grotesk"', 'sans-serif'],
+                    },
+                    maxWidth: {
+                        '4k': '1800px',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Custom Styles -->
+    <style>
+        /* CSS Variables for Dynamic Theme Switch */
+        :root {
+            --bg-main: #080c14;
+            --bg-card: rgba(15, 23, 42, 0.75);
+            --bg-card-hover: rgba(30, 41, 59, 0.85);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --nav-bg: rgba(8, 12, 20, 0.85);
+            --shadow-glow: 0 0 35px -5px rgba(6, 182, 212, 0.25);
+        }
+
+        .light-mode {
+            --bg-main: #f8fafc;
+            --bg-card: rgba(255, 255, 255, 0.9);
+            --bg-card-hover: rgba(241, 245, 249, 1);
+            --border-color: rgba(0, 0, 0, 0.08);
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --nav-bg: rgba(255, 255, 255, 0.88);
+            --shadow-glow: 0 10px 30px -5px rgba(6, 182, 212, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+        }
+
+        .glass-nav {
+            background: var(--nav-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #06b6d4 0%, #6366f1 50%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-border {
+            position: relative;
+            border-radius: 1rem;
+            background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+                        linear-gradient(135deg, #06b6d4, #6366f1) border-box;
+            border: 1px solid transparent;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-main);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4;
+        }
+
+        /* Range Slider Custom Styling */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #06b6d4;
+            cursor: pointer;
+            margin-top: -8px;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.8);
+            transition: transform 0.1s ease;
+        }
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: #1e293b;
+            border-radius: 4px;
+        }
+
+        /* Custom Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+            animation: float 5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+        .animate-pulse-glow {
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen relative selection:bg-cyan-500 selection:text-white">
+
+    <!-- Interactive Canvas Background -->
+    <canvas id="bgCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
+
+    <!-- LIVE CHAT WIDGET -->
+    <div id="chatWidget" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        <!-- Chat Window -->
+        <div id="chatBox" class="hidden mb-4 w-80 sm:w-96 glass-panel rounded-2xl shadow-2xl overflow-hidden border border-cyan-500/30 flex-col transition-all duration-300">
+            <div class="bg-gradient-to-r from-slate-900 to-indigo-950 p-4 border-b border-white/10 flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="relative">
+                        <div class="w-10 h-10 rounded-full bg-cyan-500/20 border border-cyan-400 flex items-center justify-center font-bold text-cyan-400">VG</div>
+                        <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm text-white">Vanguard AI Assistant</h4>
+                        <p class="text-xs text-emerald-400 flex items-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span> Online - Svarar direkt
+                        </p>
+                    </div>
+                </div>
+                <button onclick="toggleChat()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div id="chatMessages" class="p-4 h-72 overflow-y-auto space-y-3 text-xs sm:text-sm">
+                <div class="bg-slate-800/80 p-3 rounded-2xl rounded-tl-none border border-white/5 max-w-[85%] text-slate-200">
+                    Hej! 👋 Välkommen till Vanguard Next. Hur kan vi hjälpa dig att skala din verksamhet idag?
+                </div>
+            </div>
+            <div class="p-3 bg-slate-900/90 border-t border-white/10 flex items-center space-x-2">
+                <input id="chatInput" type="text" placeholder="Skriv ett meddelande..." onkeypress="handleChatKey(event)" class="flex-1 bg-slate-800/80 border border-white/10 rounded-xl px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-cyan-400">
+                <button onclick="sendChatMessage()" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 p-2 rounded-xl font-bold transition">
+                    <svg class="w-4 h-4 transform rotate-90" fill="currentColor" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path></svg>
+                </button>
+            </div>
+        </div>
+        <!-- Chat Button -->
+        <button onclick="toggleChat()" class="relative group bg-gradient-to-r from-cyan-500 to-indigo-600 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition duration-300 flex items-center justify-center border border-white/20">
+            <span class="absolute -top-1 -right-1 flex h-4 w-4">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-4 w-4 bg-cyan-500"></span>
+            </span>
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+        </button>
+    </div>
+
+    <!-- HEADER & NAVIGATION -->
+    <header class="fixed top-0 left-0 right-0 z-40 glass-nav transition-all duration-300">
+        <div class="max-w-4k mx-auto px-4 sm:px-8 lg:px-12 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 via-indigo-600 to-emerald-500 p-0.5 shadow-lg group-hover:scale-105 transition">
+                    <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center font-heading font-black text-cyan-400 text-xl">
+                        V
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-heading font-extrabold text-lg sm:text-xl tracking-wider text-white">VANGUARD <span class="text-cyan-400">NEXT</span></span>
+                    <span class="text-[10px] uppercase tracking-widest text-slate-400 font-semibold -mt-1">Tech & Consulting</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden lg:flex items-center space-x-8 text-sm font-medium">
+                <a href="#tjanster" class="text-slate-300 hover:text-cyan-400 transition">Tjänster</a>
+                <a href="#kalkylator" class="text-slate-300 hover:text-cyan-400 transition flex items-center"><span class="w-2 h-2 rounded-full bg-cyan-400 mr-2 animate-pulse"></span>Kalkylator</a>
+                <a href="#portfolio" class="text-slate-300 hover:text-cyan-400 transition">Case</a>
+                <a href="#om-oss" class="text-slate-300 hover:text-cyan-400 transition">Om Oss</a>
+                <a href="#priser" class="text-slate-300 hover:text-cyan-400 transition">Pris</a>
+                <a href="#faq" class="text-slate-300 hover:text-cyan-400 transition">FAQ</a>
+                <a href="#kontakt" class="text-slate-300 hover:text-cyan-400 transition">Kontakt</a>
+            </nav>
+
+            <!-- Header Right Controls -->
+            <div class="hidden sm:flex items-center space-x-4">
+                <!-- Light/Dark Mode Switch -->
+                <button onclick="toggleTheme()" class="p-2.5 rounded-xl glass-panel text-slate-300 hover:text-white hover:border-cyan-500/50 transition" title="Växla Tema">
+                    <svg id="sunIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg id="moonIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+                <!-- Quick CTA -->
+                <a href="#kontakt" class="bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-sm transition shadow-lg shadow-cyan-500/20 hover:scale-105 active:scale-95">
+                    Boka Rådgivning
+                </a>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button onclick="toggleMobileMenu()" class="lg:hidden p-2.5 rounded-xl glass-panel text-slate-300 hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden glass-panel border-t border-white/10 px-6 py-6 space-y-4">
+            <a href="#tjanster" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-cyan-400 font-medium py-2">Tjänster</a>
+            <a href="#kalkylator" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-cyan-400 font-medium py-2">Projektkalkylator</a>
+            <a href="#portfolio" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-cyan-400 font-medium py-2">Utvalda Case</a>
+            <a href="#om-oss" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-cyan-400 font-medium py-2">Om Oss</a>
+            <a href="#priser" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-cyan-400 font-medium py-2">Pris och Avtal</a>
+            <a href="#faq" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-cyan-400 font-medium py-2">FAQ</a>
+            <a href="#kontakt" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-cyan-400 font-medium py-2">Kontakt</a>
+            <div class="pt-4 flex justify-between items-center border-t border-white/10">
+                <button onclick="toggleTheme()" class="flex items-center space-x-2 text-sm text-slate-300">
+                    <span>Växla Tema</span>
+                </button>
+                <a href="#kontakt" onclick="toggleMobileMenu()" class="bg-cyan-500 text-slate-950 font-bold px-4 py-2 rounded-lg text-sm">Boka Rådgivning</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="relative z-10 pt-28">
+
+        <!-- 1. HERO SECTION -->
+        <section class="max-w-4k mx-auto px-4 sm:px-8 lg:px-12 py-12 lg:py-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-7 space-y-8">
+                <!-- Tech Badge -->
+                <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full glass-panel border-cyan-500/30 text-xs sm:text-sm text-cyan-400">
+                    <span class="flex h-2 w-2 rounded-full bg-cyan-400 animate-ping"></span>
+                    <span class="font-semibold">⚡ Ledande Tech- & AI-konsulter i Norden</span>
+                </div>
+
+                <!-- Main Heading -->
+                <h1 class="text-4xl sm:text-6xl xl:text-7xl font-heading font-extrabold tracking-tight leading-none">
+                    Framtidens Digitala Lösningar för <span class="gradient-text">Marknadsledande</span> Företag
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="text-slate-400 text-lg sm:text-xl max-w-2xl font-normal leading-relaxed">
+                    Vi utvecklar skräddarsydda AI-system, molnarkitekturer och högpresterande webbplattformar som transformerar er verksamhet och accelererar tillväxt.
+                </p>
+
+                <!-- Hero CTA Buttons -->
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center space-y-4 sm:space-y-0 sm:space-x-5 pt-4">
+                    <a href="#kalkylator" class="bg-gradient-to-r from-cyan-500 via-indigo-600 to-emerald-500 text-slate-950 font-bold px-8 py-4 rounded-xl text-center text-base hover:shadow-lg hover:shadow-cyan-500/30 transition transform hover:-translate-y-0.5">
+                        Beräkna Ditt Projekt 🚀
+                    </a>
+                    <a href="#portfolio" class="glass-panel text-white font-semibold px-8 py-4 rounded-xl text-center text-base hover:border-cyan-400/50 hover:bg-slate-800/50 transition">
+                        Utforska Case Studier
+                    </a>
+                </div>
+
+                <!-- Live Metrics Bar -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-white/10">
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-heading font-extrabold text-white">150+</div>
+                        <div class="text-xs text-slate-400">Genomförda Projekt</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-heading font-extrabold text-cyan-400">99.4%</div>
+                        <div class="text-xs text-slate-400">Kundnöjdhet</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-heading font-extrabold text-indigo-400">10+ År</div>
+                        <div class="text-xs text-slate-400">Branscherfarenhet</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-heading font-extrabold text-emerald-400">24/7</div>
+                        <div class="text-xs text-slate-400">Enterprise Support</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Visual Canvas Card -->
+            <div class="lg:col-span-5 relative">
+                <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-cyan-500 to-indigo-600 opacity-30 blur-2xl animate-pulse-glow"></div>
+                <div class="relative glass-panel rounded-3xl p-6 sm:p-8 border-white/20 space-y-6">
+                    <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                        <div class="flex items-center space-x-3">
+                            <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                        </div>
+                        <span class="text-xs font-mono text-cyan-400">vanguard-core-v4.8.js</span>
+                    </div>
+                    <!-- Code / Tech Showcase -->
+                    <div class="font-mono text-xs sm:text-sm space-y-2 text-slate-300">
+                        <p class="text-indigo-400"><span class="text-pink-400">import</span> { VanguardAI, CloudScale } <span class="text-pink-400">from</span> <span class="text-emerald-400">'@vanguard/core'</span>;</p>
+                        <p class="text-slate-400">// Initierar enterprise-arkitektur</p>
+                        <p class="text-cyan-300"><span class="text-indigo-400">const</span> app = <span class="text-yellow-400">new</span> VanguardAI({</p>
+                        <p class="pl-4">mode: <span class="text-emerald-400">'Autonomous-Scale'</span>,</p>
+                        <p class="pl-4">securityLevel: <span class="text-emerald-400">'Military-Grade'</span>,</p>
+                        <p class="pl-4">aiEngine: <span class="text-emerald-400">'LLM-Custom-Pipeline'</span></p>
+                        <p>});</p>
+                        <p class="text-emerald-400 pt-2">// status: READY TO DEPLOY 🚀</p>
+                    </div>
+
+                    <!-- Live Performance Card Widget -->
+                    <div class="bg-slate-900/90 rounded-2xl p-4 border border-white/10 space-y-3">
+                        <div class="flex justify-between text-xs">
+                            <span class="text-slate-400">Systembelastning</span>
+                            <span class="text-cyan-400 font-bold">Optimal (12%)</span>
+                        </div>
+                        <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                            <div class="bg-gradient-to-r from-cyan-400 to-indigo-500 h-full w-[12%]"></div>
+                        </div>
+                        <div class="flex justify-between text-xs pt-1">
+                            <span class="text-slate-400">Svarstid API</span>
+                            <span class="text-emerald-400 font-bold">14 ms</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. INTERAKTIV PROJEKT- OCH PRISKALKYLATOR (ROI ESTIMATOR) -->
+        <section id="kalkylator" class="max-w-4k mx-auto px-4 sm:px-8 lg:px-12 py-20">
+            <div class="glass-panel rounded-3xl p-6 sm:p-12 border-cyan-500/30 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="text-center max-w-3xl mx-auto space-y-4 mb-12">
+                    <span class="text-cyan-400 text-sm font-semibold uppercase tracking-wider">Interaktiv Kalkylator</span>
+                    <h2 class="text-3xl sm:text-5xl font-heading font-bold">Beräkna Ditt Projekt & ROI</h2>
+                    <p class="text-slate-400">Dra i reglagen nedan för att direkt få en estimerad kostnad, tidsram och förväntad effekt för ditt kommande projekt.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                    <!-- Controls -->
+                    <div class="lg:col-span-7 space-y-8">
+                        <!-- Slider 1: Scope -->
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-sm sm:text-base font-semibold">
+                                <span>Projektskop & Storlek</span>
+                                <span id="scopeValText" class="text-cyan-400 font-bold">Mellanstort Enterprise-system</span>
+                            </div>
+                            <input type="range" id="scopeSlider" min="1" max="4" value="2" oninput="updateCalculator()">
+                            <div class="flex justify-between text-xs text-slate-500">
+                                <span>MVP / Start</span>
+                                <span>Medium System</span>
+                                <span>Enterprise Platform</span>
+                                <span>Global Ekosystem</span>
+                            </div>
+                        </div>
+
+                        <!-- Slider 2: AI & Complexity -->
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-sm sm:text-base font-semibold">
+                                <span>AI-integrering & Avancerade Funktioner</span>
+                                <span id="aiValText" class="text-indigo-400 font-bold">Avancerad AI & Automatisering</span>
+                            </div>
+                            <input type="range" id="aiSlider" min="1" max="3" value="2" oninput="updateCalculator()">
+                            <div class="flex justify-between text-xs text-slate-500">
+                                <span>Baskomponenter</span>
+                                <span>Avancerad AI</span>
+                                <span>Custom LLM & Agenter</span>
+                            </div>
+                        </div>
+
+                        <!-- Slider 3: Timeline -->
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-sm sm:text-base font-semibold">
+                                <span>Önskad Leveranshastighet</span>
+                                <span id="timeValText" class="text-emerald-400 font-bold">Standard (6-8 Veckor)</span>
+                            </div>
+                            <input type="range" id="timeSlider" min="1" max="3" value="2" oninput="updateCalculator()">
+                            <div class="flex justify-between text-xs text-slate-500">
+                                <span>Standard</span>
+                                <span>Snabbspår</span>
+                                <span>Express Sprint (Dedikerat team)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calculator Output Display -->
+                    <div class="lg:col-span-5 bg-slate-900/90 rounded-2xl p-6 sm:p-8 border border-white/10 space-y-6 text-center lg:text-left">
+                        <div class="border-b border-white/10 pb-4">
+                            <span class="text-xs uppercase text-slate-400 font-semibold tracking-wider">Beräknat Investeringsspann</span>
+                            <div id="calcPrice" class="text-4xl sm:text-5xl font-heading font-extrabold text-cyan-400 mt-2">180 000 - 240 000 SEK</div>
+                            <span class="text-xs text-slate-400">*Exkl. MOMS. Exakt offert ges vid rådgivning.</span>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <span class="text-xs text-slate-400 block">Beräknad Tidslinje</span>
+                                <span id="calcTime" class="text-xl font-bold text-white">6-8 Veckor</span>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 block">Förväntad Effektivisering</span>
+                                <span id="calcRoi" class="text-xl font-bold text-emerald-400">+250% ROI</span>
+                            </div>
+                        </div>
+
+                        <button onclick="applyCalcToForm()" class="w-full bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-slate-950 font-bold py-4 rounded-xl text-sm transition shadow-lg shadow-cyan-500/20">
+                            Skicka Förfrågan Med Detta Estimering 📩
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. TJÄNSTER (SERVICES) -->
+        <section id="tjanster" class="max-w-4k mx-auto px-4 sm:px-8 lg:px-12 py-20">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                <span class="text-cyan-400 text-sm font-semibold uppercase tracking-wider">Spetskompetens</span>
+                <h2 class="text-3xl sm:text-5xl font-heading font-bold">Våra Kärntjänster</h2>
+                <p class="text-slate-400">Vi kombinerar djup teknisk expertis med affärsförståelse för att leda er digitala transformation.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="glass-panel rounded-2xl p-8 hover:border-cyan-500/50 transition group cursor-pointer" onclick="openServiceModal('ai')">
+                    <div class="w-14 h-14 rounded-xl bg-cyan-500/20 border border-cyan-400 flex items-center justify-center text-cyan-400 mb-6 group-hover:scale-110 transition">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 group-hover:text-cyan-400 transition">AI & Intelligent Automatisering</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">Skräddarsydda LLM-modeller, AI-agenter och automatiserade arbetsflöden som sparar tusentals timmar manuellt arbete.</p>
+                    <span class="text-xs font-semibold text-cyan-400 inline-flex items-center">Läs Mer & Specifikationer &rarr;</span>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="glass-panel rounded-2xl p-8 hover:border-indigo-500/50 transition group cursor-pointer" onclick="openServiceModal('web')">
+                    <div class="w-14 h-14 rounded-xl bg-indigo-500/20 border border-indigo-400 flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 transition">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 group-hover:text-indigo-400 transition">System- & Webbutveckling</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">Blixtsnabba webbapplikationer, e-handelsplattformar och mikrotjänster byggda i React, Next.js och Node/Go.</p>
+                    <span class="text-xs font-semibold text-indigo-400 inline-flex items-center">Läs Mer & Specifikationer &rarr;</span>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="glass-panel rounded-2xl p-8 hover:border-emerald-500/50 transition group cursor-pointer" onclick="openServiceModal('cloud')">
+                    <div class="w-14 h-14 rounded-xl bg-emerald-500/20 border border-emerald-400 flex items-center justify-center text-emerald-400 mb-6 group-hover:scale-110 transition">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h12a5 5 0 001-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 group-hover:text-emerald-400 transition">Molninfrastruktur & DevOps</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">Skalbara AWS/Azure-arkitekturer, Kubernetes, CI/CD-pipeliner och säkerhetsgranskningar med 99.99% upptid.</p>
+                    <span class="text-xs font-semibold text-emerald-400 inline-flex items-center">Läs Mer & Specifikationer &rarr;</span>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="glass-panel rounded-2xl p-8 hover:border-cyan-500/50 transition group cursor-pointer" onclick="openServiceModal('design')">
+                    <div class="w-14 h-14 rounded-xl bg-cyan-500/20 border border-cyan-400 flex items-center justify-center text-cyan-400 mb-6 group-hover:scale-110 transition">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 group-hover:text-cyan-400 transition">UX/UI & Produktdesign</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">Användarcentrerad design, interaktiva prototyper och kompletta Design Systems som maximerar konverteringen.</p>
+                    <span class="text-xs font-semibold text-cyan-400 inline-flex items-center">Läs Mer & Specifikationer &rarr;</span>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="glass-panel rounded-2xl p-8 hover:border-indigo-500/50 transition group cursor-pointer" onclick="openServiceModal('security')">
+                    <div class="w-14 h-14 rounded-xl bg-indigo-500/20 border border-indigo-400 flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 transition">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 group-hover:text-indigo-400 transition">Cybersäkerhet & Compliance</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">Penetrationstester, GDPR/NIS2 compliance och proaktiv övervakning för att skydda era kritiska tillgångar.</p>
+                    <span class="text-xs font-semibold text-indigo-400 inline-flex items-center">Läs Mer & Specifikationer &rarr;</span>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="glass-panel rounded-2xl p-8 hover:border-emerald-500/50 transition group cursor-pointer" onclick="openServiceModal('data')">
+                    <div class="w-14 h-14 rounded-xl bg-emerald-500/20 border border-emerald-400 flex items-center justify-center text-emerald-400 mb-6 group-hover:scale-110 transition">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 group-hover:text-emerald-400 transition">Data Analytics & BI</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">Datapiplines, realtidsdashboards och prediktiv analys som ger er ledning datadrivna beslutsunderlag.</p>
+                    <span class="text-xs font-semibold text-emerald-400 inline-flex items-center">Läs Mer & Specifikationer &rarr;</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICE MODAL -->
+        <div id="serviceModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+            <div class="glass-panel rounded-3xl max-w-2xl w-full p-6 sm:p-8 border-cyan-500/40 relative animate-float">
+                <button onclick="closeServiceModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white p-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                <div id="modalContent"></div>
+            </div>
+        </div>
+
+        <!-- 4. PORTFOLIO / UTVALDA CASE -->
+        <section id="portfolio" class="max-w-4k mx-auto px-4 sm:px-8 lg:px-12 py-20">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-12">
+                <span class="text-cyan-400 text-sm font-semibold uppercase tracking-wider">Framgångssagor</span>
+                <h2 class="text-3xl sm:text-5xl font-heading font-bold">Utvalda Kundprojekt</h2>
+                <p class="text-slate-400">Utforska hur vi har hjälpt några av Nordens mest ambitiösa bolag att dominera sina marknader.</p>
+            </div>
+
+            <!-- Portfolio Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button onclick="filterPortfolio('all')" class="filter-btn active bg-cyan-500 text-slate-950 font-bold px-5 py-2 rounded-xl text-sm transition">Alla</button>
+                <button onclick="filterPortfolio('web')" class="filter-btn glass-panel text-slate-300 font-medium px-5 py-2 rounded-xl text-sm hover:text-white transition">Webbutveckling</button>
+                <button onclick="filterPortfolio('ai')" class="filter-btn glass-panel text-slate-300 font-medium px-5 py-2 rounded-xl text-sm hover:text-white transition">AI & Data</button>
+                <button onclick="filterPortfolio('enterprise')" class="filter-btn glass-panel text-slate-300 font-medium px-5 py-2 rounded-xl text-sm hover:text-white transition">Enterprise</button>
+                <button onclick="filterPortfolio('fintech')" class="filter-btn glass-panel text-slate-300 font-medium px-5 py-2 rounded-xl text-sm hover:text-white transition">FinTech</button>
+            </div>
+
+            <!-- Portfolio Grid -->
+            <div id="portfolioGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Case 1 -->
+                <div class="portfolio-item web enterprise glass-panel rounded-2xl overflow-hidden group cursor-pointer" onclick="openPortfolioModal(1)">
+                    <div class="h-52 bg-slate-800 relative overflow-hidden flex items-center justify-center p-6">
+                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-600/30 to-indigo-900/50 group-hover:scale-110 transition duration-500"></div>
+                        <span class="text-4xl font-heading font-extrabold text-white/20 group-hover:text-cyan-400/80 transition">NORDIC LOGISTICS</span>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-cyan-400 font-semibold uppercase">Enterprise / Web</span>
+                            <span class="text-slate-400">2025</span>
+                        </div>
+                        <h3 class="text-xl font-bold group-hover:text-cyan-400 transition">Automatiserad Logistikplattform</h3>
+                        <p class="text-slate-400 text-xs sm:text-sm line-clamp-2">Realtidsspårning för 50 000+ dagliga leveranser med AI-optimerad ruttplanering.</p>
+                        <div class="pt-2 border-t border-white/10 flex justify-between items-center text-xs text-emerald-400 font-bold">
+                            <span>+340% Effektivitet</span>
+                            <span>Visa Case &rarr;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 2 -->
+                <div class="portfolio-item ai fintech glass-panel rounded-2xl overflow-hidden group cursor-pointer" onclick="openPortfolioModal(2)">
+                    <div class="h-52 bg-slate-800 relative overflow-hidden flex items-center justify-center p-6">
+                        <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/30 to-purple-900/50 group-hover:scale-110 transition duration-500"></div>
+                        <span class="text-4xl font-heading font-extrabold text-white/20 group-hover:text-indigo-400/80 transition">PAYFLOW AI</span>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-indigo-400 font-semibold uppercase">FinTech / AI</span>
+                            <span class="text-slate-400">2026</span>
+                        </div>
+                        <h3 class="text-xl font-bold group-hover:text-indigo-400 transition">Bedrägeridetektering i Realtid</h3>
+                        <p class="text-slate-400 text-xs sm:text-sm line-clamp-2">Custom ML-modell som analyserar 2000 transaktioner per sekund med 99.8% precision.</p>
+                        <div class="pt-2 border-t border-white/10 flex justify-between items-center text-xs text-emerald-400 font-bold">
+                            <span>-85% Bedrägerikostnader</span>
+                            <span>Visa Case &rarr;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 3 -->
+                <div class="portfolio-item web fintech glass-panel rounded-2xl overflow-hidden group cursor-pointer" onclick="openPortfolioModal(3)">
+                    <div class="h-52 bg-slate-800 relative overflow-hidden flex items-center justify-center p-6">
+                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-600/30 to-teal-900/50 group-hover:scale-110 transition duration-500"></div>
+                        <span class="text-4xl font-heading font-extrabold text-white/20 group-hover:text-emerald-400/80 transition">SWEDISH BANK</span>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-emerald-400 font-semibold uppercase">FinTech / Web</span>
+                            <span class="text-slate-400">2025</span>
+                        </div>
+                        <h3 class="text-xl font-bold group-hover:text-emerald-400 transition">Nästa Generations Mobilbank</h3>
+                        <p class="text-slate-400 text-xs sm:text-sm line-clamp-2">Komplett omdesign och mikrotjänst-arkitektur för över 1.2 miljoner aktiva användare.</p>
+                        <div class="pt-2 border-t border-white/10 flex justify-between items-center text-xs text-emerald-400 font-bold">
+                            <span>4.9★ App Store Betyg</span>
+                            <span>Visa Case &rarr;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PORTFOLIO MODAL -->
+        <div id="portfolioModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+            <div class="glass-panel rounded-3xl max-w-2xl w-full p-6 sm:p-8 border-cyan-500/40 relative">
+                <button onclick="closePortfolioModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white p-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                <div id="portfolioModalContent"></div>
+            </div>
+        </div>
+
+        <!-- 5. OM OSS & ANIMERADE RÄKNARE -->
+        <section id="om-oss" class="max-w-4k mx-auto px-4 sm:px-8 lg:px-12 py-20 border-t border-white/10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-6 space-y-6">
+                    <span class="text-cyan-400 text-sm font-semibold uppercase tracking-wider">Vilka Vi Är</span>
+                    <h2 class="text-3xl sm:text-5xl font-heading font-bold">Drivna av Innovation & Precision</h2>
+                    <p class="text-slate-400 text-base leading-relaxed">
+                        Vanguard Next Technology & Consulting grundades med en tydlig vision: att överbrygga klyftan mellan komplex spetsteknik och mätbar affärsnytta. Vi är ett elitteam av seniora mjukvaruarkitekter, AI-forskare och UX-experter baserade i Stockholm och Göteborg.
+                    </p>
+                    <p class="text-slate-400 text-base leading-relaxed">
+                        Vi arbetar inte bara för våra kunder – vi kliver in som strategiska partners och bygger skräddarsydda ekosystem som gör er oslagbara på er marknad.
+                    </p>
+
+                    <!-- Tech Stack Badges -->
+                    <div class="pt-4">
+                        <span class="text-xs uppercase text-slate-500 font-bold tracking-wider block mb-3">Teknologier Vi Behärskar</span>
+                        <div class="flex flex-wrap gap-2 text-xs font-mono">
+                            <span class="px-3 py-1.5 rounded-lg glass-panel text-cyan-300">React / Next.js</span>
+                            <span class="px-3 py-1.5 rounded-lg glass-panel text-indigo-300">Python / PyTorch</span>
+                            <span class="px-3 py-1.5 rounded-lg glass-panel text-emerald-300">AWS / Kubernetes</span>
+                            <span class="px-3 py-1.5 rounded-lg glass-panel text-purple-300">TypeScript</span>
+                            <span class="px-3 py-1.5 rounded-lg glass-panel text-yellow-300">Node.js / Go</span>
+                            <span class="px-3 py-1.5 rounded-lg glass-panel text-pink-300">PostgreSQL / Redis</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Animated Counters Grid -->
+                <div class="lg:col-span-6 grid grid-cols-2 gap-6">
+                    <div class="glass-panel p-8 rounded-2xl text-center border-cyan-500/20">
+                        <div class="text-4xl sm:text-5xl font-heading font-extrabold text-cyan-400 mb-2 counter" data-target="150">0</div>
+                        <span class="text-slate-400 text-xs sm:text-sm font-medium">Slutförda Projekt</span>
+                    </div>
+                    <div class="glass-panel p-8 rounded-2xl text-center border-indigo-500/20">
+                        <div class="text-4xl sm:text-5xl font-heading font-extrabold text-indigo-400 mb-2 counter" data-target="99">0</div>
+                        <span class="text-slate-400 text-xs sm:text-sm font-medium">% Nöjda Kunder</span>
+                    </div>
+                    <div class="glass-panel p-8 rounded-2xl text-center border-emerald-500/20">
+                        <div class="text-4xl sm:text-5xl font-heading font-extrabold text-emerald-400 mb-2 counter" data-target="45">0</div>
+                        <span class="text-slate-400 text-xs sm:text-sm font-medium">ms Snitt Svarstid API</span>
+                    </div>
+                    <div class="glass-panel p-8 rounded-2xl text-center border-purple-500/20">
+                        <div class="text-4xl sm:text-5xl font-heading font-extrabold text-purple-400 mb-2 counter" data-target="24">0</div>
+                        <span class="text-slate-400 text-xs sm:text-sm font-medium">/ 7 Dedikerad Support</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. KUNDOMDÖMEN (TESTIMONIALS SLIDER) -->
+        <section class="max-w-4k mx-auto px-4 sm:px-8 lg:px-12 py-20">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-12">
+                <span class="text-cyan-400 text-sm font-semibold uppercase tracking-wider">Vad Våra Kunder Säger</span>
+                <h2 class="text-3xl sm:text-5xl font-heading font-bold">Förtroende Från Branschledare</h2>
+            </div>
+
+            <div class="relative max-w-4xl mx-auto glass-panel rounded-3xl p-8 sm:p-12 border-cyan-500/30">
+                <!-- Testimonial Content Container -->
+                <div id="testimonialContainer" class="transition-opacity duration-300 min-h-[180px] flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex text-yellow-400 space-x-1">
+                            ★★★★★
+                        </div>
+                        <p id="testimonialQuote" class="text-lg sm:text-2xl font-light italic text-slate-200">
+                            "Vanguard Next levererade vår nya AI-plattform två veckor före deadline. Resultatet överträffade alla våra förväntningar och effektiviserade våra interna flöden enormt."
+                        </p>
+                    </div>
+                    <div class="pt-6 border-t border-white/10 flex items-center justify-between">
+                        <div>
+                            <div id="testimonialAuthor" class="font-bold text-white text-base">Henrik Lindqvist</div>
+                            <div id="testimonialRole" class="text-xs text-cyan-400">CTO, Nordic Tech Solutions</div>
+                        </div>
+                        <!-- Controls -->
+                        <div class="flex space-x-3">
+                            <button onclick="prevTestimonial()" class="p-3 rounded-xl glass-panel text-slate-300 hover:text-white hover:border-cyan-400">
+                                &larr;
+                            </button>
+                            <button onclick="nextTestimonial()" class="p-3 rounded-xl glass-panel text-slate-300 hover:text-white hover:border-cyan-400">
+                                &rarr;
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. PRISPAKET OCH ABONNEMANG -->
+        <section id="priser" class="max-w-4k mx-auto px-4 sm:px-8 lg:px-12 py-20 border-t border-white/10">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-12">
+                <span class="text-cyan-400 text-sm font-semibold uppercase tracking-wider">Investeringsmodeller</span>
+                <h2 class="text-3xl sm:text-5xl font-heading font-bold">Transparenta Priser & Modell</h2>
+                <p class="text-slate-400">Välj mellan dedikerat månadsteam eller fast pris per projekt.</p>
+
+                <!-- Pricing Toggle -->
+                <div class="inline-flex items-center p-1.5 rounded-2xl glass-panel border-white/10 mt-6">
+                    <button id="btnMonthly" onclick="setPricingPeriod('monthly')" class="px-6 py-2.5 rounded-xl font-bold text-sm bg-cyan-500 text-slate-950 transition">
+                        Månadsretainer (Team)
+                    </button>
+                    <button id="btnProject" onclick="setPricingPeriod('project')" class="px-6 py-2.5 rounded-xl font-bold text-sm text-slate-300 hover:text-white transition">
+                        Fast Projektpris
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pricing Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+                <!-- Tier 1 -->
+                <div class="glass-panel rounded-3xl p-8 flex flex-col justify-between hover:border-slate-400/50 transition">
+                    <div>
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest block mb-2">Startup & Growth</span>
+                        <h3 class="text-2xl font-bold mb-4">Sprint Team</h3>
+                        <div class="text-4xl font-extrabold font-heading text-white mb-2 price-display" data-monthly="65 000 SEK / mån" data-project="Från 120 000 SEK">65 000 SEK / mån</div>
+                        <p class="text-xs text-slate-400 mb-6">Perfekt för mindre projekt, MVP:er och kontinuerlig förbättring.</p>
+                        <ul class="space-y-3 text-xs sm:text-sm text-slate-300 border-t border-white/10 pt-6 mb-8">
+                            <li class="flex items-center"><span class="text-cyan-400 mr-2">✓</span> Dedikerad Frontend & Backend Dev</li>
+                            <li class="flex items-center"><span class="text-cyan-400 mr-2">✓</span> 80 Timmar per Månad</li>
+                            <li class="flex items-center"><span class="text-cyan-400 mr-2">✓</span> Vecko-sprints & Code Reviews</li>
+                            <li class="flex items-center"><span class="text-cyan-400 mr-2">✓</span> Slack-kanal & Direktkontakt</li>
+                        </ul>
+                    </div>
+                    <a href="#kontakt" class="w-full text-center py-3 rounded-xl glass-panel text-white font-bold hover:border-cyan-400 transition">
+                        Välj Sprint Team
+                    </a>
+                </div>
+
+                <!-- Tier 2 (Highlighted) -->
+                <div class="glass-panel rounded-3xl p-8 flex flex-col justify-between border-cyan-500/60 relative scale-105 shadow-2xl shadow-cyan-500/10">
+                    <span class="absolute -top-3.5 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-cyan-500 to-indigo-600 text-slate-950 font-extrabold text-[10px] uppercase tracking-widest px-4 py-1 rounded-full">
+                        Mest Populär
+                    </span>
+                    <div>
+                        <span class="text-xs font-bold text-cyan-400 uppercase tracking-widest block mb-2">Scale-Up Enterprise</span>
+                        <h3 class="text-2xl font-bold mb-4">Dedicated Core</h3>
+                        <div class="text-4xl font-extrabold font-heading text-cyan-400 mb-2 price-display" data-monthly="145 000 SEK / mån" data-project="Från 280 000 SEK">145 000 SEK / mån</div>
+                        <p class="text-xs text-slate-400 mb-6">Fullskaligt utvecklingsteam med AI-arkitekt och UX-designer.</p>
+                        <ul class="space-y-3 text-xs sm:text-sm text-slate-300 border-t border-white/10 pt-6 mb-8">
+                            <li class="flex items-center"><span class="text-cyan-400 mr-2">✓</span> Fullstack Team + AI-Expert + Lead UX</li>
+                            <li class="flex items-center"><span class="text-cyan-400 mr-2">✓</span> 180 Timmar per Månad</li>
+                            <li class="flex items-center"><span class="text-cyan-400 mr-2">✓</span> SLA med 99.9% Uptime-garanti</li>
+                            <li class="flex items-center"><span class="text-cyan-400 mr-2">✓</span> Prioriterad Support 24/7</li>
+                        </ul>
+                    </div>
+                    <a href="#kontakt" class="w-full text-center py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 text-slate-950 font-extrabold hover:from-cyan-400 transition">
+                        Starta Dedicated Core 🚀
+                    </a>
+                </div>
+
+                <!-- Tier 3 -->
+                <div class="glass-panel rounded-3xl p-8 flex flex-col justify-between hover:border-slate-400/50 transition">
+                    <div>
+                        <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest block mb-2">Custom Enterprise</span>
+                        <h3 class="text-2xl font-bold mb-4">Transformation</h3>
+                        <div class="text-4xl font-extrabold font-heading text-white mb-2 price-display" data-monthly="Offert baserad" data-project="Custom Offert">Offert baserad</div>
+                        <p class="text-xs text-slate-400 mb-6">För stora koncernstora digitala omstruktureringar och custom AI.</p>
+                        <ul class="space-y-3 text-xs sm:text-sm text-slate-300 border-t border-white/10 pt-6 mb-8">
+                            <li class="flex items-center"><span class="text-cyan-400 mr-2">✓</span> Obegränsad skalning av team</li>
+                            <li class="flex items-center"><span class="text-cyan-400 mr-2">✓</span> Dedicated Solution Architect & CISO</li>
+                            <li class="flex items-center"><span class="text-cyan-400 mr-2">✓</span> On-premise AI & Custom LLM</li>
+                            <li class="flex items-center"><span class="text-cyan-400 mr-2">✓</span> ISO-27001 & NIS2 Compliance</li>
+                        </ul>
+                    </div>
+                    <a href="#kontakt" class="w-full text-center py-3 rounded-xl glass-panel text-white font-bold hover:border-cyan-400 transition">
+                        Begär Anpassad Offert
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. INTERAKTIV FAQ -->
+        <section id="faq" class="max-w-4k mx-auto px-4 sm:px-8 lg:px-12 py-20">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-12">
+                <span class="text-cyan-400 text-sm font-semibold uppercase tracking-wider">Vanliga Frågor</span>
+                <h2 class="text-3xl sm:text-5xl font-heading font-bold">Svar På Era Funderingar</h2>
+            </div>
+
+            <div class="max-w-3xl mx-auto space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="glass-panel rounded-2xl overflow-hidden border-white/10">
+                    <button onclick="toggleFaq(1)" class="w-full p-6 text-left font-bold text-lg flex justify-between items-center hover:text-cyan-400 transition">
+                        <span>Hur snabbt kan ni starta ett nytt projekt?</span>
+                        <span id="faqIcon-1" class="text-cyan-400 font-mono text-2xl">+</span>
+                    </button>
+                    <div id="faqContent-1" class="hidden px-6 pb-6 text-slate-400 text-sm leading-relaxed border-t border-white/5 pt-4">
+                        Normalt kan vi påbörja ett nytt projekt eller tillsätta ett konsultteam inom 1-2 veckor efter undertecknat avtal. För akut uppskalning har vi express-sprints redo.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="glass-panel rounded-2xl overflow-hidden border-white/10">
+                    <button onclick="toggleFaq(2)" class="w-full p-6 text-left font-bold text-lg flex justify-between items-center hover:text-cyan-400 transition">
+                        <span>Vem äger källkoden och IP efter avslutats projekt?</span>
+                        <span id="faqIcon-2" class="text-cyan-400 font-mono text-2xl">+</span>
+                    </button>
+                    <div id="faqContent-2" class="hidden px-6 pb-6 text-slate-400 text-sm leading-relaxed border-t border-white/5 pt-4">
+                        Ni som kund äger 100% av all källkod, alla immateriella rättigheter (IP) och all dokumentation från dag ett. Inga låsningar eller oschyssta licenser.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="glass-panel rounded-2xl overflow-hidden border-white/10">
+                    <button onclick="toggleFaq(3)" class="w-full p-6 text-left font-bold text-lg flex justify-between items-center hover:text-cyan-400 transition">
+                        <span>Hur säkerställer ni cybersäkerhet och GDPR?</span>
+                        <span id="faqIcon-3" class="text-cyan-400 font-mono text-2xl">+</span>
+                    </button>
+                    <div id="faqContent-3" class="hidden px-6 pb-6 text-slate-400 text-sm leading-relaxed border-t border-white/5 pt-4">
+                        Säkerhet är inbyggt i hela vår utvecklingscykel (DevSecOps). Vi följer OWASP Top 10, krypterar all data i vila och under transport samt ser till att alla system uppfyller GDPR och NIS2.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="glass-panel rounded-2xl overflow-hidden border-white/10">
+                    <button onclick="toggleFaq(4)" class="w-full p-6 text-left font-bold text-lg flex justify-between items-center hover:text-cyan-400 transition">
+                        <span>Erbjuder ni förvaltning och support efter lansering?</span>
+                        <span id="faqIcon-4" class="text-cyan-400 font-mono text-2xl">+</span>
+                    </button>
+                    <div id="faqContent-4" class="hidden px-6 pb-6 text-slate-400 text-sm leading-relaxed border-t border-white/5 pt-4">
+                        Ja! Vi erbjuder SLA-baserade förvaltningsavtal med dygnet-runt-övervakning, löpande säkerhetsuppdateringar och vidareutveckling.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. KONTAKT OCH BOKNINGSFORMULÄR -->
+        <section id="kontakt" class="max-w-4k mx-auto px-4 sm:px-8 lg:px-12 py-20 border-t border-white/10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <!-- Info Left -->
+                <div class="lg:col-span-5 space-y-8">
+                    <span class="text-cyan-400 text-sm font-semibold uppercase tracking-wider">Ta Kontakt</span>
+                    <h2 class="text-3xl sm:text-5xl font-heading font-bold">Låt Oss Bygga Framtiden Tillsammans</h2>
+                    <p class="text-slate-400 leading-relaxed">
+                        Har du ett spännande projekt på gång eller vill du veta hur AI kan effektivisera er verksamhet? Fyll i formuläret så återkopplar en av våra seniora rådgivare inom 2 timmar.
+                    </p>
+
+                    <div class="space-y-6 pt-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-cyan-500/20 border border-cyan-400 flex items-center justify-center text-cyan-400">
+                                📍
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white">Huvudkontor</h4>
+                                <p class="text-slate-400 text-sm">Kungsgatan 42, 111 35 Stockholm</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-indigo-500/20 border border-indigo-400 flex items-center justify-center text-indigo-400">
+                                ✉️
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white">E-post</h4>
+                                <p class="text-slate-400 text-sm">kontakt@vanguardnext.se</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-400 flex items-center justify-center text-emerald-400">
+                                📞
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white">Telefon</h4>
+                                <p class="text-slate-400 text-sm">+46 (0)8 123 456 78</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Right -->
+                <div class="lg:col-span-7 glass-panel rounded-3xl p-8 sm:p-10 border-cyan-500/30">
+                    <form id="contactForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold text-slate-300 uppercase">Ditt Namn *</label>
+                                <input type="text" id="formName" required placeholder="Anna Svensson" class="w-full bg-slate-900/80 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400 transition">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold text-slate-300 uppercase">E-postadress *</label>
+                                <input type="email" id="formEmail" required placeholder="anna@foretag.se" class="w-full bg-slate-900/80 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400 transition">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold text-slate-300 uppercase">Företagsnamn</label>
+                                <input type="text" id="formCompany" placeholder="TechAB" class="w-full bg-slate-900/80 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400 transition">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold text-slate-300 uppercase">Önskat Område</label>
+                                <select id="formService" class="w-full bg-slate-900/80 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400 transition">
+                                    <option value="AI & Automatisering">AI & Automatisering</option>
+                                    <option value="Webbutveckling">System & Webbutveckling</option>
+                                    <option value="Molninfrastruktur">Molninfrastruktur & DevOps</option>
+                                    <option value="UX/UI Design">UX/UI & Produktdesign</option>
+                                    <option value="Rådgivning">Generell Rådgivning</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-slate-300 uppercase">Projektbeskrivning eller Meddelande *</label>
+                            <textarea id="formMessage" required rows="4" placeholder="Beskriv kort vad ni vill uppnå..." class="w-full bg-slate-900/80 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400 transition"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-gradient-to-r from-cyan-500 via-indigo-600 to-emerald-500 text-slate-950 font-bold py-4 rounded-xl text-base shadow-lg shadow-cyan-500/20 hover:opacity-90 transition">
+                            Skicka Bokningsförfrågan 🚀
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- SUBMISSION SUCCESS MODAL -->
+        <div id="successModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+            <div class="glass-panel rounded-3xl max-w-md w-full p-8 text-center border-emerald-500/50 space-y-6">
+                <div class="w-16 h-16 bg-emerald-500/20 border border-emerald-400 rounded-full flex items-center justify-center text-emerald-400 text-3xl mx-auto">
+                    ✓
+                </div>
+                <h3 class="text-2xl font-bold">Tack för er förfrågan!</h3>
+                <p class="text-slate-300 text-sm">Vi har tagit emot era uppgifter. En av våra seniora rådgivare kommer att kontakta er inom kort.</p>
+                <button onclick="closeSuccessModal()" class="bg-emerald-500 text-slate-950 font-bold px-8 py-3 rounded-xl text-sm w-full">
+                    Stäng
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="relative z-10 border-t border-white/10 bg-slate-950/80 pt-16 pb-12 mt-20">
+        <div class="max-w-4k mx-auto px-4 sm:px-8 lg:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+            <!-- Col 1: Brand -->
+            <div class="lg:col-span-2 space-y-4">
+                <a href="#" class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-indigo-600 flex items-center justify-center font-bold text-slate-950 text-sm">
+                        V
+                    </div>
+                    <span class="font-heading font-extrabold text-lg text-white">VANGUARD <span class="text-cyan-400">NEXT</span></span>
+                </a>
+                <p class="text-slate-400 text-xs sm:text-sm max-w-sm">
+                    Nordens ledande konsultbolag inom nästa generations AI-system, modern webbutveckling och molnarkitektur.
+                </p>
+                <div class="flex space-x-3 text-slate-400 pt-2">
+                    <a href="#" class="hover:text-cyan-400 transition">LinkedIn</a> •
+                    <a href="#" class="hover:text-cyan-400 transition">GitHub</a> •
+                    <a href="#" class="hover:text-cyan-400 transition">X / Twitter</a>
+                </div>
+            </div>
+
+            <!-- Col 2: Navigation -->
+            <div class="space-y-3">
+                <h4 class="text-white font-bold text-sm uppercase tracking-wider">Navigering</h4>
+                <ul class="space-y-2 text-xs text-slate-400">
+                    <li><a href="#tjanster" class="hover:text-cyan-400 transition">Tjänster</a></li>
+                    <li><a href="#kalkylator" class="hover:text-cyan-400 transition">Projektkalkylator</a></li>
+                    <li><a href="#portfolio" class="hover:text-cyan-400 transition">Case Studier</a></li>
+                    <li><a href="#om-oss" class="hover:text-cyan-400 transition">Om Vanguard Next</a></li>
+                    <li><a href="#priser" class="hover:text-cyan-400 transition">Prismodeller</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Services -->
+            <div class="space-y-3">
+                <h4 class="text-white font-bold text-sm uppercase tracking-wider">Erbjudanden</h4>
+                <ul class="space-y-2 text-xs text-slate-400">
+                    <li><a href="#tjanster" class="hover:text-cyan-400 transition">Generativ AI & Automatisering</a></li>
+                    <li><a href="#tjanster" class="hover:text-cyan-400 transition">Next.js & React Utveckling</a></li>
+                    <li><a href="#tjanster" class="hover:text-cyan-400 transition">AWS & Kubernetes Migration</a></li>
+                    <li><a href="#tjanster" class="hover:text-cyan-400 transition">Cybersecurity & ISO-27001</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 4: Newsletter -->
+            <div class="space-y-3">
+                <h4 class="text-white font-bold text-sm uppercase tracking-wider">Insikter & Nyhetsbrev</h4>
+                <p class="text-slate-400 text-xs">Få månatliga rapporter om AI och framtidens tech direkt i din inkorg.</p>
+                <div class="flex space-x-2">
+                    <input type="email" placeholder="Din e-post..." class="bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400 flex-1">
+                    <button onclick="alert('Tack för din prenumeration!')" class="bg-cyan-500 text-slate-950 font-bold px-3 py-2 rounded-xl text-xs">OK</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-4k mx-auto px-4 sm:px-8 lg:px-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 space-y-4 sm:space-y-0">
+            <div>© 2026 Vanguard Next Technology & Consulting AB. Alla rättigheter förbehållna.</div>
+            <div class="flex space-x-6">
+                <a href="#" class="hover:text-slate-400">Integritetspolicy</a>
+                <a href="#" class="hover:text-slate-400">Cookies</a>
+                <a href="#" class="hover:text-slate-400">SLA Betingelser</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        /* 1. INTERACTIVE BACKGROUND CANVAS (Nodes & Particles) */
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles = [];
+        let mouse = { x: null, y: null, radius: 150 };
+
+        function initCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            particles = [];
+            const count = Math.floor((width * height) / 18000);
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.6,
+                    vy: (Math.random() - 0.5) * 0.6,
+                    radius: Math.random() * 2 + 1
+                });
+            }
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+
+            for (let i = 0; i < particles.length; i++) {
+                let p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > width) p.vx *= -1;
+                if (p.y < 0 || p.y > height) p.vy *= -1;
+
+                // Mouse interaction
+                if (mouse.x !== null) {
+                    let dx = mouse.x - p.x;
+                    let dy = mouse.y - p.y;
+                    let dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < mouse.radius) {
+                        p.x -= (dx / dist) * 1.5;
+                        p.y -= (dy / dist) * 1.5;
+                    }
+                }
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = '#06b6d4';
+                ctx.fill();
+
+                // Connect lines
+                for (let j = i + 1; j < particles.length; j++) {
+                    let p2 = particles[j];
+                    let dx = p.x - p2.x;
+                    let dy = p.y - p2.y;
+                    let dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(6, 182, 212, ${1 - dist / 120})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateCanvas);
+        }
+
+        window.addEventListener('resize', initCanvas);
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+        window.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        // Start Canvas on Load
+        window.onload = function() {
+            initCanvas();
+            animateCanvas();
+            initCounters();
+        };
+
+        /* 2. THEME SWITCHER (Light/Dark) */
+        let isLight = false;
+        function toggleTheme() {
+            isLight = !isLight;
+            document.body.classList.toggle('light-mode');
+            document.getElementById('sunIcon').classList.toggle('hidden');
+            document.getElementById('moonIcon').classList.toggle('hidden');
+        }
+
+        /* 3. MOBILE MENU TOGGLE */
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        /* 4. PROJECT CALCULATOR LOGIC */
+        function updateCalculator() {
+            const scope = parseInt(document.getElementById('scopeSlider').value);
+            const ai = parseInt(document.getElementById('aiSlider').value);
+            const time = parseInt(document.getElementById('timeSlider').value);
+
+            // Labels
+            const scopeTexts = ["Mindre App / MVP", "Mellanstort Enterprise-system", "Stor Plattform", "Globalt Ekosystem"];
+            const aiTexts = ["Baskomponenter", "Avancerad AI & Automatisering", "Custom LLM & AI-Agenter"];
+            const timeTexts = ["Standard (6-8 Veckor)", "Snabbspår (4-5 Veckor)", "Express Sprint (2-3 Veckor)"];
+
+            document.getElementById('scopeValText').innerText = scopeTexts[scope - 1];
+            document.getElementById('aiValText').innerText = aiTexts[ai - 1];
+            document.getElementById('timeValText').innerText = timeTexts[time - 1];
+
+            // Price Calculation Logic
+            let base = 60000;
+            let total = base * scope * (ai * 0.8) * (time === 3 ? 1.3 : 1.0);
+
+            let minPrice = Math.round(total * 0.85 / 1000) * 1000;
+            let maxPrice = Math.round(total * 1.25 / 1000) * 1000;
+
+            document.getElementById('calcPrice').innerText = `${minPrice.toLocaleString('sv-SE')} - ${maxPrice.toLocaleString('sv-SE')} SEK`;
+
+            // Weeks
+            let weeks = Math.max(2, 10 - (scope * 1.5) + (time === 3 ? -3 : 0));
+            document.getElementById('calcTime').innerText = `${Math.round(weeks)} - ${Math.round(weeks + 3)} Veckor`;
+
+            // ROI
+            let roi = 150 + (ai * 80);
+            document.getElementById('calcRoi').innerText = `+${roi}% ROI`;
+        }
+
+        function applyCalcToForm() {
+            const price = document.getElementById('calcPrice').innerText;
+            const msg = document.getElementById('formMessage');
+            msg.value = `[Automatisk uppskattning från kalkylator]\nBeräknat prisspann: ${price}\nJag vill diskutera detta projekt med er!`;
+            document.getElementById('kontakt').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        /* 5. SERVICE MODAL DATA & HANDLER */
+        const serviceData = {
+            ai: {
+                title: "AI & Intelligent Automatisering",
+                text: "Vi hjälper företag att implementera praktisk AI som sparar pengar från dag ett. Från custom RAG-system och LLM-modeller till automatiserade kundtjänstagenter och prediktiv dataanalys.",
+                tags: ["Python", "PyTorch", "OpenAI / Claude API", "LangChain", "Vector DBs"]
+            },
+            web: {
+                title: "System- & Webbutveckling",
+                text: "Skräddarsydda webbapplikationer byggda för maximal prestanda, SEO och användarvänlighet. Vi använder moderna ramverk som React och Next.js för att leverera blixtsnabb respons.",
+                tags: ["Next.js", "React", "TypeScript", "Node.js", "GraphQL"]
+            },
+            cloud: {
+                title: "Molninfrastruktur & DevOps",
+                text: "Bygg en infrastruktur som aldrig går ner. Vi migrerar er till molnet, sätter upp automatiserade CI/CD-pipeliner och optimerar era molnkostnader.",
+                tags: ["AWS", "Azure", "Kubernetes", "Docker", "Terraform"]
+            },
+            design: {
+                title: "UX/UI & Produktdesign",
+                text: "Vi skapar digitala upplevelser som era användare älskar. Genom djupa användaranalyser och interaktiva prototyper säkerställer vi högsta konvertering.",
+                tags: ["Figma", "Design Systems", "User Testing", "Prototyping"]
+            },
+            security: {
+                title: "Cybersäkerhet & Compliance",
+                text: "Skydda era data och kunder mot moderna hot. Vi utför omfattande penetrationsprov och hjälper er uppfylla ISO-27001 och NIS2-direktivet.",
+                tags: ["Penetration Testing", "GDPR", "NIS2", "Encryption", "IAM"]
+            },
+            data: {
+                title: "Data Analytics & BI",
+                text: "Förvandla rådata till värdefulla affärsinsikter. Vi bygger moderna datalager och realtidsdashboards för ledningsgrupper.",
+                tags: ["Snowflake", "PowerBI", "Databricks", "SQL", "ETL"]
+            }
+        };
+
+        function openServiceModal(key) {
+            const data = serviceData[key];
+            const content = document.getElementById('modalContent');
+            content.innerHTML = `
+                <h3 class="text-3xl font-bold mb-4 text-cyan-400">${data.title}</h3>
+                <p class="text-slate-300 text-sm leading-relaxed mb-6">${data.text}</p>
+                <div class="mb-6">
+                    <span class="text-xs uppercase font-bold text-slate-400 block mb-2">Nyckelteknologier:</span>
+                    <div class="flex flex-wrap gap-2">
+                        ${data.tags.map(t => `<span class="px-3 py-1 bg-cyan-500/10 border border-cyan-400/30 rounded-lg text-xs text-cyan-300">${t}</span>`).join('')}
+                    </div>
+                </div>
+                <button onclick="closeServiceModal(); location.href='#kontakt';" class="w-full bg-cyan-500 text-slate-950 font-bold py-3 rounded-xl">
+                    Boka kostnadsfri rådgivning kring detta
+                </button>
+            `;
+            document.getElementById('serviceModal').classList.remove('hidden');
+        }
+
+        function closeServiceModal() {
+            document.getElementById('serviceModal').classList.add('hidden');
+        }
+
+        /* 6. PORTFOLIO FILTER & MODAL */
+        function filterPortfolio(category) {
+            const items = document.querySelectorAll('.portfolio-item');
+            const btns = document.querySelectorAll('.filter-btn');
+
+            btns.forEach(b => {
+                b.classList.remove('bg-cyan-500', 'text-slate-950', 'font-bold');
+                b.classList.add('glass-panel', 'text-slate-300');
+            });
+
+            event.target.classList.remove('glass-panel', 'text-slate-300');
+            event.target.classList.add('bg-cyan-500', 'text-slate-950', 'font-bold');
+
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function openPortfolioModal(id) {
+            const modal = document.getElementById('portfolioModal');
+            const content = document.getElementById('portfolioModalContent');
+
+            const cases = {
+                1: { title: "Nordic Logistics Automation", desc: "Ett komplett skräddarsytt system för realtidshantering av 50 000+ dagliga paket med integrerad AI-ruttoptimering.", result: "+340% Effektivitetsökning" },
+                2: { title: "PayFlow AI Fraud Engine", desc: "Machine learning-modell tränad på miljoner finansiella transaktioner som stoppar bedrägerier i realtid.", result: "99.8% Precision" },
+                3: { title: "Swedish Bank Mobile App", desc: "Infrastruktur och UI för en av Sveriges mest populära mobilbanker med extremt höga krav på tillgänglighet och säkerhet.", result: "4.9 Betyg App Store" }
+            };
+
+            const data = cases[id];
+            content.innerHTML = `
+                <span class="text-xs text-cyan-400 font-bold uppercase tracking-wider block mb-2">Case Studie #${id}</span>
+                <h3 class="text-2xl font-bold mb-4">${data.title}</h3>
+                <p class="text-slate-300 text-sm leading-relaxed mb-6">${data.desc}</p>
+                <div class="bg-slate-900/80 p-4 rounded-xl border border-white/10 mb-6">
+                    <span class="text-xs text-slate-400 block">Uppmätt Resultat</span>
+                    <span class="text-xl font-bold text-emerald-400">${data.result}</span>
+                </div>
+                <button onclick="closePortfolioModal()" class="w-full bg-cyan-500 text-slate-950 font-bold py-3 rounded-xl">Stäng</button>
+            `;
+            modal.classList.remove('hidden');
+        }
+
+        function closePortfolioModal() {
+            document.getElementById('portfolioModal').classList.add('hidden');
+        }
+
+        /* 7. COUNTERS ANIMATION */
+        function initCounters() {
+            const counters = document.querySelectorAll('.counter');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = +entry.target.getAttribute('data-target');
+                        let count = 0;
+                        const inc = target / 40;
+                        const update = () => {
+                            count += inc;
+                            if (count < target) {
+                                entry.target.innerText = Math.ceil(count);
+                                setTimeout(update, 30);
+                            } else {
+                                entry.target.innerText = target;
+                            }
+                        };
+                        update();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counters.forEach(c => observer.observe(c));
+        }
+
+        /* 8. TESTIMONIALS SLIDER */
+        const testimonials = [
+            { quote: "Vanguard Next levererade vår nya AI-plattform två veckor före deadline. Resultatet överträffade alla våra förväntningar och effektiviserade våra interna flöden enormt.", author: "Henrik Lindqvist", role: "CTO, Nordic Tech Solutions" },
+            { quote: "Det mest professionella konsultteam vi någonsin samarbetat med. Deras spetskompetens inom molnarkitektur och UX räddade hela vår produktlansering.", author: "Sofia Berg", role: "VP Product, FinTech Group" },
+            { quote: "Svarstiderna på våra system dök från 400ms till under 20ms efter Vanguard Nexts optimering. Det var en otrolig investering.", author: "Marcus Ekström", role: "Head of Infrastructure, E-Com Nordics" }
+        ];
+        let currentTestimonial = 0;
+
+        function updateTestimonial() {
+            const t = testimonials[currentTestimonial];
+            const container = document.getElementById('testimonialContainer');
+            container.style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('testimonialQuote').innerText = `"${t.quote}"`;
+                document.getElementById('testimonialAuthor').innerText = t.author;
+                document.getElementById('testimonialRole').innerText = t.role;
+                container.style.opacity = '1';
+            }, 300);
+        }
+
+        function nextTestimonial() {
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            updateTestimonial();
+        }
+
+        function prevTestimonial() {
+            currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+            updateTestimonial();
+        }
+
+        /* 9. PRICING PERIOD TOGGLE */
+        function setPricingPeriod(period) {
+            const btnM = document.getElementById('btnMonthly');
+            const btnP = document.getElementById('btnProject');
+            const displays = document.querySelectorAll('.price-display');
+
+            if (period === 'monthly') {
+                btnM.className = "px-6 py-2.5 rounded-xl font-bold text-sm bg-cyan-500 text-slate-950 transition";
+                btnP.className = "px-6 py-2.5 rounded-xl font-bold text-sm text-slate-300 hover:text-white transition";
+                displays.forEach(d => d.innerText = d.getAttribute('data-monthly'));
+            } else {
+                btnP.className = "px-6 py-2.5 rounded-xl font-bold text-sm bg-cyan-500 text-slate-950 transition";
+                btnM.className = "px-6 py-2.5 rounded-xl font-bold text-sm text-slate-300 hover:text-white transition";
+                displays.forEach(d => d.innerText = d.getAttribute('data-project'));
+            }
+        }
+
+        /* 10. FAQ ACCORDION */
+        function toggleFaq(id) {
+            const content = document.getElementById(`faqContent-${id}`);
+            const icon = document.getElementById(`faqIcon-${id}`);
+
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.innerText = "−";
+            } else {
+                content.classList.add('hidden');
+                icon.innerText = "+";
+            }
+        }
+
+        /* 11. FORM SUBMISSION */
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            document.getElementById('successModal').classList.remove('hidden');
+            document.getElementById('contactForm').reset();
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').classList.add('hidden');
+        }
+
+        /* 12. LIVE CHAT WIDGET LOGIC */
+        function toggleChat() {
+            const chatBox = document.getElementById('chatBox');
+            chatBox.classList.toggle('hidden');
+            chatBox.classList.toggle('flex');
+        }
+
+        function handleChatKey(e) {
+            if (e.key === 'Enter') sendChatMessage();
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            const chatMessages = document.getElementById('chatMessages');
+
+            // User Message
+            const userBubble = document.createElement('div');
+            userBubble.className = "bg-cyan-500 text-slate-950 p-3 rounded-2xl rounded-tr-none max-w-[85%] ml-auto font-medium text-xs sm:text-sm";
+            userBubble.innerText = msg;
+            chatMessages.appendChild(userBubble);
+
+            input.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // AI Simulated Response
+            setTimeout(() => {
+                const botBubble = document.createElement('div');
+                botBubble.className = "bg-slate-800/80 p-3 rounded-2xl rounded-tl-none border border-white/5 max-w-[85%] text-slate-200 text-xs sm:text-sm";
+                
+                if (msg.toLowerCase().includes('pris') || msg.toLowerCase().includes('kostar')) {
+                    botBubble.innerText = "Våra priser beror på projektskop. Använd gärna vår interaktiva kalkylator längre upp på sidan för ett direkt estimat!";
+                } else if (msg.toLowerCase().includes('boka') || msg.toLowerCase().includes('möte')) {
+                    botBubble.innerText = "Du kan enkelt boka ett möte genom att fylla i vårt kontaktformulär längst ner på sidan.";
+                } else {
+                    botBubble.innerText = "Tack för ditt meddelande! En av våra rådgivare har notifierats och återkopplar så fort som möjligt.";
+                }
+
+                chatMessages.appendChild(botBubble);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
